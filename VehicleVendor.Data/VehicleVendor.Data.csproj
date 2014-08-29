@@ -46,8 +46,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IVehicleVendorData.cs" />
+    <Compile Include="IVehicleVendorDbContext.cs" />
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="VendorContext.cs" />
+    <Compile Include="Repositories\GenericRepository.cs" />
+    <Compile Include="Repositories\IGenericRepository.cs" />
+    <Compile Include="Repositories\DealersRepository.cs" />
+    <Compile Include="VehicleVendorData.cs" />
+    <Compile Include="VehicleVendorDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
