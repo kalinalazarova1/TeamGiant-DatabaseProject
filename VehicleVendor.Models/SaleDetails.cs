@@ -4,7 +4,12 @@
 
     public class SaleDetails
     {
-        public int Id { get; set; }
+        public SaleDetails()
+        {
+            this.Id = Guid.NewGuid();
+        }
+
+        public Guid Id { get; set; }
 
         public Guid SaleId { get; set; }
 
