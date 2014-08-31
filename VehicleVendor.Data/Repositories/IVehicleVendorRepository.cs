@@ -15,6 +15,8 @@
         
         DbSet<SaleDetails> SalesDetails { get; }
 
+        DbSet<Discount> Discounts { get; }
+
         void Add<T>(T entity) where T : class;
         
         void Update<T>(T old, T entity) where T : class;

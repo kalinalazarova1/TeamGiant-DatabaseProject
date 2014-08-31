@@ -4,6 +4,7 @@ namespace VehicleVendor.Data.Migrations
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
+    using VehicleVendor.Data;
 
     public sealed class Configuration : DbMigrationsConfiguration<VehicleVendorDbContext>
     {
@@ -13,7 +14,7 @@ namespace VehicleVendor.Data.Migrations
             this.AutomaticMigrationDataLossAllowed = true;
         }
 
-        protected override void Seed(VehicleVendor.Data.VehicleVendorDbContext context)
+        protected override void Seed(VehicleVendorDbContext context)
         {
         }
     }

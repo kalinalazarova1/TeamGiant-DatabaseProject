@@ -2,9 +2,9 @@
 {
     public enum Region
     {
-        Americas,
-        Europe,
-        AsiaAndOceania,
-        MiddleEastAndAfrica
+        Americas = 1,
+        Europe = 2,
+        AsiaAndOceania = 3,
+        MiddleEastAndAfrica = 4
     }
 }

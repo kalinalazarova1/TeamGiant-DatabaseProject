@@ -3,30 +3,26 @@
     using System;
     using System.Linq;
     using System.Linq.Expressions;
+    using MongoDB.Bson;
     using VehicleVendor.Data;
     using VehicleVendor.Data.Repositories;
     using VehicleVendor.Models;
-    using MongoDB.Bson;
-
 
     public class VehicleVendorConsoleClientEntryPoint
     {
         public static void Main()
         {
-            var repo = new VehicleVendorRepository(new IVehicleVendorDbContext[] { new VehicleVendorDbContext(), new VehicleVendorMySqlDbContext() });
+            var repo = new VehicleVendorRepository(
+                new IVehicleVendorDbContext[]
+                { 
+                    new VehicleVendorDbContext(),
+                    new VehicleVendorMySqlDbContext() 
+                });
             var nissanMongoDb = new VehicleVendorMongoDb();
-            var vehicles = nissanMongoDb.GetDocument("Vehicles");
-            foreach (var item in vehicles)
-            {
-                repo.Add<Vehicle>(
-                    new Vehicle() {
-                        Name = item["name"].ToString(),
-                        Price = (decimal)item["price"].ToDouble(),
-                        Category = (Category)item["category"].ToInt32()
-                    });
-            }
-            Console.WriteLine();
+            var mongoLoader = new RepositoryLoader(repo, nissanMongoDb);
+            mongoLoader.LoadRepository();
             repo.SaveChanges();
+
             /* Example usage of the repository:
              * 
             var car = new Vehicle() { Name = "Micra", Price = 12000.00m, Category = Category.Car };

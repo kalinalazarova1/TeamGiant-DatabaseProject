@@ -56,6 +56,14 @@
             }
         }
 
+        public DbSet<Discount> Discounts
+        {
+            get
+            {
+                return this.contexts.FirstOrDefault().Discounts;
+            }
+        }
+
         public void Add<T>(T entity) where T : class
         {
             foreach (var context in this.contexts)

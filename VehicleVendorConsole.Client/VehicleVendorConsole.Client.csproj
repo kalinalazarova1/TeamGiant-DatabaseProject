@@ -61,6 +61,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="RepositoryLoader.cs" />
+    <Compile Include="IRepositoryLoader.cs" />
     <Compile Include="VehicleVendorConsoleClientEntryPoint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

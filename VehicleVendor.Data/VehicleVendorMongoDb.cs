@@ -4,7 +4,7 @@
     using MongoDB.Bson;
     using MongoDB.Driver;
 
-    public class VehicleVendorMongoDb
+    public class VehicleVendorMongoDb : IVehicleVendorMongoDb
     {
         private MongoDatabase database;
 

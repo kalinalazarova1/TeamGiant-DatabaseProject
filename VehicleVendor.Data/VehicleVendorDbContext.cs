@@ -22,6 +22,8 @@
 
         public DbSet<SaleDetails> SalesDetails { get; set; }
 
+        public DbSet<Discount> Discounts { get; set; }
+
         public new IDbSet<T> Set<T>() where T : class
         {
             return base.Set<T>();

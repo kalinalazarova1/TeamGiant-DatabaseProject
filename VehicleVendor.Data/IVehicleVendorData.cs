@@ -14,6 +14,8 @@
         IGenericRepository<Sale> Sales { get; }
 
         IGenericRepository<SaleDetails> SaleDetails { get; }
+
+        IGenericRepository<Discount> Discounts { get; }
         
         void SaveChanges();
     }

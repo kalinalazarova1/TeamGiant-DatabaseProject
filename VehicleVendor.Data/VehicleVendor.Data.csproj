@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="IVehicleVendorData.cs" />
     <Compile Include="IVehicleVendorDbContext.cs" />
+    <Compile Include="IVehicleVendorMongoDb.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\ConfigurationMySql.cs" />
     <Compile Include="Migrations\MySqlHistoryContext.cs" />
