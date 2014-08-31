@@ -25,47 +25,56 @@
 
         private void LoadVehicles()
         {
-            var vehicles = this.nissanMongoDb.GetDocument("Vehicles");
-            foreach (var item in vehicles)
+            if (this.repo.Vehicles.Count() == 0)
             {
-                this.repo.Add<Vehicle>(
-                    new Vehicle()
-                    {
-                        Name = item["name"].ToString(),
-                        Price = (decimal)item["price"].ToDouble(),
-                        Category = (Category)item["category"].ToInt32()
-                    });
+                var vehicles = this.nissanMongoDb.GetDocument("Vehicles");
+                foreach (var item in vehicles)
+                {
+                    this.repo.Add<Vehicle>(
+                        new Vehicle()
+                        {
+                            Name = item["name"].ToString(),
+                            Price = (decimal)item["price"].ToDouble(),
+                            Category = (Category)item["category"].ToInt32()
+                        });
+                }
             }
         }
 
         private void LoadCountries()
         {
-            var coutries = this.nissanMongoDb.GetDocument("Countries");
-            foreach (var item in coutries)
+            if (this.repo.Countries.Count() == 0)
             {
-                this.repo.Add<Country>(
-                    new Country()
-                    {
-                        Name = item["Country"].ToString(),
-                        Region = (Region)item["Region"].ToInt32()
-                    });
+                var coutries = this.nissanMongoDb.GetDocument("Countries");
+                foreach (var item in coutries)
+                {
+                    this.repo.Add<Country>(
+                        new Country()
+                        {
+                            Name = item["Country"].ToString(),
+                            Region = (Region)item["Region"].ToInt32()
+                        });
+                }
             }
         }
 
         private void LoadDealers()
         {
-            var dealers = this.nissanMongoDb.GetDocument("Dealers");
-            foreach (var item in dealers)
+            if (this.repo.Dealers.Count() == 0)
             {
-                var countryName = item["country"].ToString();
-                var country = this.repo.Countries.Local.First(c => c.Name == countryName);
-                this.repo.Add<Dealer>(
-                    new Dealer()
-                    {
-                        Company = item["company"].ToString(),
-                        Address = item["address"].ToString(),
-                        Country = country
-                    });
+                var dealers = this.nissanMongoDb.GetDocument("Dealers");
+                foreach (var item in dealers)
+                {
+                    var countryName = item["country"].ToString();
+                    var country = this.repo.Countries.Local.First(c => c.Name == countryName);
+                    this.repo.Add<Dealer>(
+                        new Dealer()
+                        {
+                            Company = item["company"].ToString(),
+                            Address = item["address"].ToString(),
+                            Country = country
+                        });
+                }
             }
         }
     }

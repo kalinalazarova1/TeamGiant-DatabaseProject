@@ -2,11 +2,10 @@
 {
     using System;
     using System.Linq;
-    using System.Linq.Expressions;
-    using MongoDB.Bson;
     using VehicleVendor.Data;
     using VehicleVendor.Data.Repositories;
     using VehicleVendor.Models;
+    using VehicleVendor.Reports;
 
     public class VehicleVendorConsoleClientEntryPoint
     {
@@ -22,6 +21,16 @@
             var mongoLoader = new RepositoryLoader(repo, nissanMongoDb);
             mongoLoader.LoadRepository();
             repo.SaveChanges();
+            var sale = new Sale() { DealerId = 1, SaleDate = new DateTime(2014, 8, 31) };
+            repo.Add<Sale>(sale);
+            var details = new SaleDetails() { Quantity = 1000, VehicleId = 1, Sale = sale };
+            repo.Add<SaleDetails>(details);
+            details = new SaleDetails() { Quantity = 1000, VehicleId = 2, Sale = sale };
+            repo.Add<SaleDetails>(details);
+            repo.SaveChanges();
+
+            var reporter = new ExcelReportsSQLiteGenerator(repo, new DateTime(2014,8,1), new DateTime(2014,9,1));
+            reporter.GenerateReport();
 
             /* Example usage of the repository:
              * 
