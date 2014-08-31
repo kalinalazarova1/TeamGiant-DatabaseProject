@@ -7,7 +7,7 @@
     using VehicleVendor.Data;
     using VehicleVendor.Models;
 
-    public class VehicleVendorRepository
+    public class VehicleVendorRepository : IVehicleVendorRepository
     {
         private IEnumerable<IVehicleVendorDbContext> contexts;
 
