@@ -36,6 +36,9 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="iTextSharp">
+      <HintPath>..\packages\iTextSharp-LGPL.4.1.6\lib\iTextSharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -57,6 +60,15 @@
   <ItemGroup>
     <Compile Include="ExcelReportsSQLiteGenerator.cs" />
     <Compile Include="IReportGenerator.cs" />
+    <Compile Include="PdfReportSQLServerGenerator\CarsPdfRow.cs" />
+    <Compile Include="PdfReportSQLServerGenerator\CellsFactory.cs" />
+    <Compile Include="PdfReportSQLServerGenerator\GeneratePDF.cs" />
+    <Compile Include="PdfReportSQLServerGenerator\PdfCells\DataCell.cs" />
+    <Compile Include="PdfReportSQLServerGenerator\PdfCells\HeaderCell.cs" />
+    <Compile Include="PdfReportSQLServerGenerator\PdfCells\PdfCell.cs" />
+    <Compile Include="PdfReportSQLServerGenerator\PdfCells\SummaryCell.cs" />
+    <Compile Include="PdfReportSQLServerGenerator\PdfCells\TitleCell.cs" />
+    <Compile Include="PdfReportSQLServerGenerator\PdfRow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
