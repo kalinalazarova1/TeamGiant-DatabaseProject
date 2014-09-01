@@ -2,10 +2,12 @@
 {
     using System;
     using System.Linq;
+
     using VehicleVendor.Data;
     using VehicleVendor.Data.Repositories;
     using VehicleVendor.Models;
     using VehicleVendor.Reports;
+    using PdfReportCreator;
 
     public class VehicleVendorConsoleClientEntryPoint
     {
@@ -29,8 +31,15 @@
             repo.Add<SaleDetails>(details);
             repo.SaveChanges();
 
-            var reporter = new ExcelReportsSQLiteGenerator(repo, new DateTime(2014,8,1), new DateTime(2014,9,1));
+            var reporter = new ExcelReportsSQLiteGenerator(repo, new DateTime(2014, 8, 1), new DateTime(2014, 9, 1));
             reporter.GenerateReport();
+
+            //===========================================
+            // Pdf file isngenerated in the main folder
+            // Example usage of the PDF Report Generator:
+            //GeneratePDF pdf = new GeneratePDF(repo);
+            //pdf.Report("../../PdfReport.pdf");
+            //===========================================
 
             /* Example usage of the repository:
              * 
