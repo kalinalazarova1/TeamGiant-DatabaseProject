@@ -9,13 +9,19 @@
     using VehicleVendor.Data.Repositories;
     using VehicleVendor.Models;
     
-    public class ZipExcelLoader
+    public class ZipExcelLoader : IRepositoryLoader
     {
+        private IVehicleVendorRepository repo;
+        public ZipExcelLoader(IVehicleVendorRepository repo)
+        {
+            this.repo = repo;
+        }
+
         /// <summary>
         /// Reads MS Excel (.xls) file through the OLE DB data provider. 
         /// CAUTION: This method does not call SaveChanges() to the repo.
         /// </summary>
-        public void LoadIntoModel(IVehicleVendorRepository repo)
+        public void LoadRepository()
         {
             string fileLocation = @"..\..\datafile.xls";
             FileInfo dataFile = new FileInfo(fileLocation);
@@ -66,20 +72,20 @@
                             var dealerInt = (int)(double)dealer;
                             var saleDate = (DateTime)reader["SaleDate"];
                             sale = new Sale() { DealerId = dealerInt, SaleDate = saleDate };
-                            repo.Add<Sale>(sale);
+                            this.repo.Add<Sale>(sale);
 
-                            details = this.DetailsRow(repo, reader, sale);
+                            details = this.DetailsRow(this.repo, reader, sale);
                             if (details != null)
                             {
-                                repo.Add<SaleDetails>(details);
+                                this.repo.Add<SaleDetails>(details);
                             }
 
                             while (reader.Read())
                             {
                                 if (details != null)
                                 {
-                                    details = this.DetailsRow(repo, reader, sale);
-                                    repo.Add<SaleDetails>(details);
+                                    details = this.DetailsRow(this.repo, reader, sale);
+                                    this.repo.Add<SaleDetails>(details);
                                 }
                             }
                         }

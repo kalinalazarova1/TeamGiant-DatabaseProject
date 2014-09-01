@@ -35,8 +35,8 @@
             // details = new SaleDetails() { Quantity = 1000, VehicleId = 2, Sale = sale };
             // repo.Add<SaleDetails>(details);
             // repo.SaveChanges();
-            var zipExLoader = new ZipExcelLoader();
-            zipExLoader.LoadIntoModel(repo);
+            var zipExLoader = new ZipExcelLoader(repo);
+            zipExLoader.LoadRepository();
             repo.SaveChanges();
 
             // =============================================================
