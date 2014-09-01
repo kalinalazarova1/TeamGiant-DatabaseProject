@@ -37,8 +37,8 @@
 
             // sample generate report Excel:
             // =============================================================
-            // var excelReporter = new ExcelReportsSQLiteGenerator(repo, new DateTime(2014, 8, 1), new DateTime(2014, 9, 1));
-            // excelReporter.GenerateReport();
+             var excelReporter = new ExcelReportsSQLiteGenerator(repo, new DateTime(2014, 8, 1), new DateTime(2014, 9, 1));
+             excelReporter.GenerateReport();
             // =============================================================
 
             // =============================================================
