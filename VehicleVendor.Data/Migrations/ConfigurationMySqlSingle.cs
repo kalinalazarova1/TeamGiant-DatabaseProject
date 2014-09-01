@@ -6,9 +6,9 @@
     using System.Linq;
     using MySql.Data.Entity;
 
-    public sealed class ConfigurationMySqlSingle : DbMigrationsConfiguration<VehicleVendorMySqlDbContext>
+    public sealed class ConfigurationMySql : DbMigrationsConfiguration<VehicleVendorDbContextInMySql>
     {
-        public ConfigurationMySqlSingle() :
+        public ConfigurationMySql() :
             base()
         {
             this.AutomaticMigrationsEnabled = true;

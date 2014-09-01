@@ -2,7 +2,6 @@
 {
     using System;
     using System.Linq;
-
     using VehicleVendor.Data;
     using VehicleVendor.Data.Repositories;
     using VehicleVendor.Models;
@@ -16,9 +15,11 @@
             var repo = new VehicleVendorRepository(
                 new IVehicleVendorDbContext[]
                 { 
-                    new VehicleVendorDbContext(),
-                    new VehicleVendorMySqlDbContext() 
+                    new VehicleVendorDbContext()
+                    //new VehicleVendorDbContextInMySql() 
                 });
+            var repoMySql = new VehicleVendorMySqlRepository(new VehicleVendorMySqlDbContext());
+            repoMySql.Dealers.All(d => true);
             var nissanMongoDb = new VehicleVendorMongoDb();
             var mongoLoader = new RepositoryLoader(repo, nissanMongoDb);
             mongoLoader.LoadRepository();
@@ -50,8 +51,8 @@
             // =============================================================
             // Pdf file isngenerated in the main folder
             // Example usage of the PDF Report Generator:
-            // GeneratePDF pdf = new GeneratePDF(repo);
-            // pdf.Report("../../PdfReport.pdf");
+            GeneratePDF pdf = new GeneratePDF(repo);
+            pdf.Report("../../PdfReport.pdf");
             // =============================================================
 
             /* Example usage of the repository:
