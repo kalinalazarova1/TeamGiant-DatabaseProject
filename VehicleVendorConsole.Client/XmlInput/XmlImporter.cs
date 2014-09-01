@@ -5,11 +5,8 @@
     using System.IO;
     using System.Linq;
     using System.Xml;
-    using System.Xml.Linq;
     using System.Xml.Schema;
-    using VehicleVendor.Data;
     using VehicleVendor.Data.Repositories;
-    using VehicleVendor.Models;
 
     public class XmlImporter
     {

@@ -5,7 +5,7 @@
     using VehicleVendor.Data;
     using VehicleVendor.Data.Repositories;
     using VehicleVendor.Models;
-
+    
     public class RepositoryLoader : IRepositoryLoader
     {
         private IVehicleVendorRepository repo;
