@@ -23,23 +23,30 @@
             var mongoLoader = new RepositoryLoader(repo, nissanMongoDb);
             mongoLoader.LoadRepository();
             repo.SaveChanges();
-            var sale = new Sale() { DealerId = 1, SaleDate = new DateTime(2014, 8, 31) };
-            repo.Add<Sale>(sale);
-            var details = new SaleDetails() { Quantity = 1000, VehicleId = 1, Sale = sale };
-            repo.Add<SaleDetails>(details);
-            details = new SaleDetails() { Quantity = 1000, VehicleId = 2, Sale = sale };
-            repo.Add<SaleDetails>(details);
-            repo.SaveChanges();
 
+            // sample add sale:
+            // ============================================================
+            // var sale = new Sale() { DealerId = 1, SaleDate = new DateTime(2014, 8, 31) };
+            // repo.Add<Sale>(sale);
+            // var details = new SaleDetails() { Quantity = 1000, VehicleId = 1, Sale = sale };
+            // repo.Add<SaleDetails>(details);
+            // details = new SaleDetails() { Quantity = 1000, VehicleId = 2, Sale = sale };
+            // repo.Add<SaleDetails>(details);
+            // repo.SaveChanges();
+            // =============================================================
+
+            // sample generate report Excel:
+            // =============================================================
             // var excelReporter = new ExcelReportsSQLiteGenerator(repo, new DateTime(2014, 8, 1), new DateTime(2014, 9, 1));
             // excelReporter.GenerateReport();
+            // =============================================================
 
-            //===========================================
+            // =============================================================
             // Pdf file isngenerated in the main folder
             // Example usage of the PDF Report Generator:
-            GeneratePDF pdf = new GeneratePDF(repo);
-            pdf.Report("../../PdfReport.pdf");
-            //===========================================
+            // GeneratePDF pdf = new GeneratePDF(repo);
+            // pdf.Report("../../PdfReport.pdf");
+            // =============================================================
 
             /* Example usage of the repository:
              * 
