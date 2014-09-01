@@ -8,6 +8,7 @@
     using VehicleVendor.Models;
     using VehicleVendor.Reports;
     using PdfReportCreator;
+    using VehicleVendorConsole.Client.XmlInput;
 
     public class VehicleVendorConsoleClientEntryPoint
     {
@@ -17,13 +18,19 @@
                 new IVehicleVendorDbContext[]
                 { 
                     new VehicleVendorDbContext(),
-                    new VehicleVendorMySqlDbContext() 
+                    //new VehicleVendorMySqlDbContext() 
                 });
             var nissanMongoDb = new VehicleVendorMongoDb();
             var mongoLoader = new RepositoryLoader(repo, nissanMongoDb);
             mongoLoader.LoadRepository();
             repo.SaveChanges();
 
+            var xmlimporter = new XmlImporter(repo);
+            var parseResult = xmlimporter.ParseDiscounts(@"..\..\..\Discounts.xml", @"..\..\..\Discounts.xsd");
+            mongoLoader.LoadDiscounts(parseResult);
+           
+            repo.SaveChanges();
+            
             // sample add sale:
             // ============================================================
             // var sale = new Sale() { DealerId = 1, SaleDate = new DateTime(2014, 8, 31) };
@@ -37,8 +44,8 @@
 
             // sample generate report Excel:
             // =============================================================
-             var excelReporter = new ExcelReportsSQLiteGenerator(repo, new DateTime(2014, 8, 1), new DateTime(2014, 9, 1));
-             excelReporter.GenerateReport();
+             //var excelReporter = new ExcelReportsSQLiteGenerator(repo, new DateTime(2014, 8, 1), new DateTime(2014, 9, 1));
+             //excelReporter.GenerateReport();
             // =============================================================
 
             // =============================================================

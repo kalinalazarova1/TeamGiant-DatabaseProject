@@ -2,15 +2,15 @@
 <discounts xmlns ="urn:discounts.data">
   <discount type="promotional">
     <dealer>
-      <company>Nissan Sofia AD</company>
-      <country>Bulgaria</country>
+      <company>Kudu Motors</company>
+      <country>South Africa</country>
     </dealer>
     <amount>5.7</amount>
   </discount>
   <discount type="permanent">
     <dealer>
-      <company>Nissan Center Europe GmbH</company>
-      <country>Germany</country>
+      <company>Alhamrani United Company</company>
+      <country>Saudi Arabia</country>
     </dealer>
     <amount>6.3</amount>
   </discount>
