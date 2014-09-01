@@ -22,9 +22,9 @@
         public void GenerateReport()
         {
 
-            var dbConn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=..\\..\\Report.xlsx;Extended Properties=\"Excel 12.0 Xml;HDR=YES\";");
+            var dbConn = new OleDbConnection(ReportSettings.Default.OleDbConnectionString);
             dbConn.Open();
-            var con = new SQLiteConnection(@"Data Source=..\..\..\SQLiteDatabase\nissan_costs.sqlite;Version=3;");
+            var con = new SQLiteConnection(ReportSettings.Default.SQLiteConnectionString);
             con.Open();
             using (con)
             {
@@ -34,7 +34,6 @@
                     cmdEx.Connection = dbConn;
                     cmdEx.CommandText = "CREATE TABLE ProfitReport (Dealer char(255), Sales currency, Costs currency, Profit currency)";
                     cmdEx.ExecuteNonQuery();
-                    
                     var cmd = new SQLiteCommand(
                         "SELECT * FROM dealersCosts",
                         con);

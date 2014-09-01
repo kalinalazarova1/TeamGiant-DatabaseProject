@@ -70,6 +70,11 @@
     <Compile Include="PdfReportSQLServerGenerator\PdfCells\TitleCell.cs" />
     <Compile Include="PdfReportSQLServerGenerator\PdfRow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReportSettings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>ReportSettings.settings</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VehicleVendor.Data\VehicleVendor.Data.csproj">
@@ -92,6 +97,10 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="ReportSettings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>ReportSettings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
