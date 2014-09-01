@@ -42,42 +42,46 @@
                     sheetNameList.Add(name);
                 }
 
-                string sheetName = sheetNameList[0];
-                string sqlString = "select * from [" + sheetName + "];";
-
-                OleDbCommand cmdGetRows = new OleDbCommand(sqlString, db_Con);
-
-                OleDbDataReader reader = cmdGetRows.ExecuteReader();
-
-                using (reader)
+                foreach (var sheetName in sheetNameList)
                 {
-                    reader.Read();
-                    Sale sale;
-                    SaleDetails details;
-                    var dealer = reader["DealerId"];
-                    if (dealer != DBNull.Value)
+                    string sqlString = "select * from [" + sheetName + "];";
+
+                    OleDbCommand cmdGetRows = new OleDbCommand(sqlString, db_Con);
+
+                    OleDbDataReader reader = cmdGetRows.ExecuteReader();
+
+                    using (reader)
                     {
-                        var dealerInt = (int)(double)dealer;
-                        var saleDate = (DateTime)reader["SaleDate"];
-                        sale = new Sale() { DealerId = dealerInt, SaleDate = saleDate };
-                        repo.Add<Sale>(sale);
-
-                        details = this.DetailsRow(repo, reader, sale);
-                        if (details != null)
+                        reader.Read();
+                        Sale sale;
+                        SaleDetails details;
+                        var dealer = reader["DealerId"];
+                        if (dealer != DBNull.Value)
                         {
-                            repo.Add<SaleDetails>(details);
-                        }
+                            var dealerInt = (int)(double)dealer;
+                            var saleDate = (DateTime)reader["SaleDate"];
+                            sale = new Sale() { DealerId = dealerInt, SaleDate = saleDate };
+                            repo.Add<Sale>(sale);
 
-                        while (reader.Read())
-                        {
+                            details = this.DetailsRow(repo, reader, sale);
                             if (details != null)
                             {
-                                details = this.DetailsRow(repo, reader, sale);
                                 repo.Add<SaleDetails>(details);
+                            }
+
+                            while (reader.Read())
+                            {
+                                if (details != null)
+                                {
+                                    details = this.DetailsRow(repo, reader, sale);
+                                    repo.Add<SaleDetails>(details);
+                                }
                             }
                         }
                     }
                 }
+
+                
             }//using db_Con
         }
 
