@@ -82,9 +82,9 @@
 
                             while (reader.Read())
                             {
+                                details = this.DetailsRow(this.repo, reader, sale);
                                 if (details != null)
                                 {
-                                    details = this.DetailsRow(this.repo, reader, sale);
                                     this.repo.Add<SaleDetails>(details);
                                 }
                             }
