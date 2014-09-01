@@ -24,6 +24,8 @@
             mongoLoader.LoadRepository();
             repo.SaveChanges();
 
+
+
             // sample add sale:
             // ============================================================
             // var sale = new Sale() { DealerId = 1, SaleDate = new DateTime(2014, 8, 31) };
@@ -33,6 +35,10 @@
             // details = new SaleDetails() { Quantity = 1000, VehicleId = 2, Sale = sale };
             // repo.Add<SaleDetails>(details);
             // repo.SaveChanges();
+            var zipExLoader = new ZipExcelLoader();
+            zipExLoader.LoadIntoModel(repo);
+            repo.SaveChanges();
+
             // =============================================================
 
             // sample generate report Excel:

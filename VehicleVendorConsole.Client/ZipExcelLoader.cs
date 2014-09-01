@@ -2,20 +2,26 @@
 {
     using System;
     using System.IO;
+    using System.IO.Compression;
     using System.Data.OleDb;
     using System.Data;
     using System.Collections.Generic;
     using VehicleVendor.Data.Repositories;
     using VehicleVendor.Models;
-
-
+    
     public class ZipExcelLoader
     {
         /// <summary>
         /// Reads MS Excel (.xls) file through the OLE DB data provider. 
+        /// CAUTION: This method does not call SaveChanges() to the repo.
         /// </summary>
         public void LoadIntoModel(IVehicleVendorRepository repo)
         {
+            string zipPath = @"..\..\zipfile.zip";
+            string extractPath = @"..\..\";
+
+            ZipFile.ExtractToDirectory(zipPath, extractPath);
+            
             string fileLocation = @"..\..\datafile.xls";
 
             string connectionString = @"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + fileLocation + ";"
@@ -37,7 +43,6 @@
                 }
 
                 string sheetName = sheetNameList[0];
-                Console.WriteLine(sheetName);
                 string sqlString = "select * from [" + sheetName + "];";
 
                 OleDbCommand cmdGetRows = new OleDbCommand(sqlString, db_Con);
@@ -52,10 +57,9 @@
                     var dealer = reader["DealerId"];
                     if (dealer != DBNull.Value)
                     {
-                        dealer = (int)(double)dealer;
+                        var dealerInt = (int)(double)dealer;
                         var saleDate = (DateTime)reader["SaleDate"];
-                        Console.WriteLine(dealer + "  -  " + saleDate);
-                        sale = new Sale() { DealerId = (int)(double)dealer, SaleDate = saleDate };
+                        sale = new Sale() { DealerId = dealerInt, SaleDate = saleDate };
                         repo.Add<Sale>(sale);
 
                         details = this.DetailsRow(repo, reader, sale);
@@ -82,9 +86,9 @@
             var detailQty = reader["Quantity"];
             if (detailQty != DBNull.Value)
             {
-                detailQty = (int)(double)detailQty;
+                var detailQtyInt = (int)(double)detailQty;
                 var vehiceId = (int)(double)reader["VehicleId"];
-                var details = new SaleDetails() { Quantity = (int)(double)detailQty, VehicleId = vehiceId, Sale = sale };
+                var details = new SaleDetails() { Quantity = (int)(double)detailQtyInt, VehicleId = vehiceId, Sale = sale };
                 return details;
             }
             return null;
