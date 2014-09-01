@@ -17,13 +17,18 @@
         /// </summary>
         public void LoadIntoModel(IVehicleVendorRepository repo)
         {
+            string fileLocation = @"..\..\datafile.xls";
+            FileInfo dataFile = new FileInfo(fileLocation);
+            
             string zipPath = @"..\..\zipfile.zip";
             string extractPath = @"..\..\";
-
-            ZipFile.ExtractToDirectory(zipPath, extractPath);
             
-            string fileLocation = @"..\..\datafile.xls";
-
+            if (!dataFile.Exists)
+            {
+                ZipFile.ExtractToDirectory(zipPath, extractPath);
+            }
+            
+            
             string connectionString = @"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + fileLocation + ";"
                 + "Extended Properties=\"Excel 8.0;HDR=Yes;IMEX=1\";";
 
@@ -80,8 +85,6 @@
                         }
                     }
                 }
-
-                
             }//using db_Con
         }
 
