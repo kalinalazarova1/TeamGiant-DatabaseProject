@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<discounts xmlns ="urn:discounts.data">
+  <discount type="promotional">
+    <dealer>
+      <company>Nissan Sofia AD</company>
+      <country>Bulgaria</country>
+    </dealer>
+    <amount>5.7</amount>
+  </discount>
+  <discount type="permanent">
+    <dealer>
+      <company>Nissan Center Europe GmbH</company>
+      <country>Germany</country>
+    </dealer>
+    <amount>6.3</amount>
+  </discount>
+</discounts>
