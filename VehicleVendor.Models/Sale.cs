@@ -33,7 +33,5 @@
         }
 
         public virtual Dealer Dealer { get; set; }
-
-        public virtual SaleDetails SaleDetails { get; set; }
     }
 }

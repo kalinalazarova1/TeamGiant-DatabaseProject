@@ -8,6 +8,7 @@
     using VehicleVendor.Reports;
     using PdfReportCreator;
     using VehicleVendorConsole.Client.XmlInput;
+    using VehicleVendor.Reports.XmlReportSqlServerGenerator;
 
     public class VehicleVendorConsoleClientEntryPoint
     {
@@ -26,39 +27,49 @@
             mongoLoader.LoadRepository();
             repo.SaveChanges();
 
-			var xmlimporter = new XmlImporter(repo);
-            var parseResult = xmlimporter.ParseDiscounts(@"..\..\..\Discounts.xml", @"..\..\..\Discounts.xsd");
-            mongoLoader.LoadDiscounts(parseResult);
+            // =============================================================
+            // sample load discounts from xml:
+            // =============================================================
+            //var xmlimporter = new XmlImporter(repo);
+            //var xmlLoader = new XmlLoader(repo);
+            //var parseResult = xmlimporter.ParseDiscounts(@"..\..\..\Discounts.xml", @"..\..\..\Discounts.xsd");
+            //xmlLoader.LoadDiscounts(parseResult);
            
-            repo.SaveChanges();
+            //repo.SaveChanges();
 
             // sample add sale:
             // ============================================================
-            // var sale = new Sale() { DealerId = 1, SaleDate = new DateTime(2014, 8, 31) };
-            // repo.Add<Sale>(sale);
-            // var details = new SaleDetails() { Quantity = 1000, VehicleId = 1, Sale = sale };
-            // repo.Add<SaleDetails>(details);
-            // details = new SaleDetails() { Quantity = 1000, VehicleId = 2, Sale = sale };
-            // repo.Add<SaleDetails>(details);
-            // repo.SaveChanges();
-            var zipExLoader = new ZipExcelLoader(repo);
-            zipExLoader.LoadRepository();
-            repo.SaveChanges();
+            //var sale = new Sale() { DealerId = 1, SaleDate = new DateTime(2014, 8, 31) };
+            //repo.Add<Sale>(sale);
+            //var details = new SaleDetails() { Quantity = 1000, VehicleId = 1, Sale = sale };
+            //repo.Add<SaleDetails>(details);
+            //details = new SaleDetails() { Quantity = 1000, VehicleId = 2, Sale = sale };
+            //repo.Add<SaleDetails>(details);
+            //repo.SaveChanges();
+            //var zipExLoader = new ZipExcelLoader(repo);
+            //zipExLoader.LoadRepository();
+            //repo.SaveChanges();
 
             // =============================================================
-
             // sample generate report Excel:
             // =============================================================
-             var excelReporter = new ExcelReportsSQLiteGenerator(repo, new DateTime(2014, 8, 1), new DateTime(2014, 9, 1));
-             excelReporter.GenerateReport();
+            //var excelReporter = new ExcelReportsSQLiteGenerator(repo, new DateTime(2014, 8, 1), new DateTime(2014, 9, 1));
+            //excelReporter.GenerateReport();
             // =============================================================
 
             // =============================================================
             // Pdf file isngenerated in the main folder
             // Example usage of the PDF Report Generator:
-            GeneratePDF pdf = new GeneratePDF(repo);
-            pdf.Report("../../PdfReport.pdf");
+            //GeneratePDF pdf = new GeneratePDF(repo);
+            //pdf.Report("../../PdfReport.pdf");
             // =============================================================
+
+            // =============================================================
+            // sample generate XML report:
+            // =============================================================
+            XmlReportGenerator xmlGenerator =
+                new XmlReportGenerator(repo, new DateTime(2013, 08, 05), DateTime.Now); //, "Germany", "Nissan Center Europe GmbH");
+            xmlGenerator.GenerateReport();
 
             /* Example usage of the repository:
              * 

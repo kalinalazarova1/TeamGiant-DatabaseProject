@@ -70,6 +70,7 @@
     <Compile Include="VehicleVendorConsoleClientEntryPoint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="XmlInput\XmlImporter.cs" />
+    <Compile Include="XmlLoader.cs" />
     <Compile Include="ZipExcelLoader.cs" />
   </ItemGroup>
   <ItemGroup>
