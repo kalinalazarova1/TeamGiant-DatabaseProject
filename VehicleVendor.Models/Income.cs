@@ -4,12 +4,7 @@
 
     public class Income
     {
-        public Income()
-        {
-            this.Id = Guid.NewGuid();
-        }
-
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         public int DealerId { get; set; }
 

@@ -19,6 +19,8 @@ using VehicleVendor.Reports;
 using PdfReportCreator;
 using VehicleVendorConsole.Client;
 using VehicleVendorConsole.Client.XmlInput;
+using VehicleVendor.Reports.JsonReportSQLServerGenerator;
+using VehicleVendor.Reports.MySqlDataJsonGenerator;
 
 namespace VehicleVendor.WPF
 {
@@ -85,7 +87,11 @@ namespace VehicleVendor.WPF
 
         public void OnGenerateJSONClick(object sender, RoutedEventArgs e)
         {
-
+            JsonReportSQLServerGenerator json = new JsonReportSQLServerGenerator(repo);
+            json.GenerateReport();
+            MySqlDataJsonGenerator jsonToMySql = new MySqlDataJsonGenerator(this.repo, this.repoMySql);
+            jsonToMySql.WriteJsonsReportsToMySql();
+            
         }
 
         public void OnGenerateXMLReportClick(object sender, RoutedEventArgs e)

@@ -15,16 +15,12 @@ namespace VehicleVendor.Reports.MySqlDataJsonGenerator
     public class MySqlDataJsonGenerator
     {
         private IVehicleVendorRepository repository;
-        private IVehicleVendorRepository mySqlRepository;
+        private IVehicleVendorMySqlRepository mySqlRepository;
 
-        public MySqlDataJsonGenerator(IVehicleVendorRepository vehicleVendorRepository)
+        public MySqlDataJsonGenerator(IVehicleVendorRepository vehicleVendorRepository, IVehicleVendorMySqlRepository mySqlRepository)
         {
             this.repository = vehicleVendorRepository;
-            mySqlRepository = new VehicleVendorRepository(
-                new IVehicleVendorDbContext[]
-                { 
-                    new VehicleVendorDbContextInMySql()
-                });
+            this.mySqlRepository = mySqlRepository;
         }
 
         public void WriteJsonsReportsToMySql()
@@ -33,18 +29,16 @@ namespace VehicleVendor.Reports.MySqlDataJsonGenerator
 
             foreach (var model in jsonReports)
             {
-                var vehicle = new Vehicle()
+                var income = new Income()
                 {
-                    //Id = model.ProductId,
-                    Name = model.Model,
-                    Category = model.Category,
-                    Price = model.Price
+                    DealerId = model.DealerId,
+                    Date = model.Date,
+                    Amount = model.Amount
                 };
 
-                this.mySqlRepository.Add<Vehicle>(vehicle);
+                this.mySqlRepository.Add<Income>(income);
+                this.mySqlRepository.SaveChanges();
             }
-
-            this.mySqlRepository.SaveChanges();
         }
 
         private string ReadJsonReport(string path)
@@ -61,15 +55,17 @@ namespace VehicleVendor.Reports.MySqlDataJsonGenerator
 
         private JsonReportModel ConvertJsonReports(string json)
         {
-            JsonReportModel reportModel = JsonConvert.DeserializeObject<JsonReportModel>(json);
+            var reportModel = JsonConvert.DeserializeObject<JsonReportModel>(json);
 
             return reportModel;
         }
 
-        private IList<int> GetProductIds()
+        private IList<DateTime> GetIncomeDates()
         {
-            var collection = this.repository.Vehicles
-                .Select(x => x.Id)
+            var collection = this.repository.Sales
+                .Select(x => x.SaleDate)
+                .GroupBy(x => x)
+                .Select(x => x.Key)
                 .ToList();
 
             return collection;
@@ -77,14 +73,14 @@ namespace VehicleVendor.Reports.MySqlDataJsonGenerator
 
         private List<JsonReportModel> ParseAllJsonReports()
         {
-            var ids = this.GetProductIds();
+            var dates = this.GetIncomeDates();
             string currJsonString = string.Empty;
             List<JsonReportModel> jsonModels = new List<JsonReportModel>();
 
-            foreach (var id in ids)
+            foreach (var date in dates)
             {
-                currJsonString = this.ReadJsonReport(@"../../Reports/" + id + ".json");
-                JsonReportModel currJsonModel = this.ConvertJsonReports(currJsonString);
+                currJsonString = this.ReadJsonReport(@"../../Reports/" + date.ToShortDateString() + ".json");
+                var currJsonModel = this.ConvertJsonReports(currJsonString);
                 jsonModels.Add(currJsonModel);
             }
 

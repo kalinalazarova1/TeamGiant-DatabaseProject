@@ -19,7 +19,7 @@
 
         public DateTime SaleDate { get; set; }
 
-        public ICollection<SaleDetails> SaleItems
+        public virtual ICollection<SaleDetails> SaleItems
         {
             get 
             {
@@ -33,7 +33,5 @@
         }
 
         public virtual Dealer Dealer { get; set; }
-
-        public virtual SaleDetails SaleDetails { get; set; }
     }
 }

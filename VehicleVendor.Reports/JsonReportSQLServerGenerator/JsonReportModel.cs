@@ -13,13 +13,11 @@ namespace VehicleVendor.Reports.JsonReportSQLServerGenerator
         //[JsonConverter(typeof(ObjectIdConverter))]
         //public ObjectId _id { get; set; }
 
-        public int ProductId { get; set; }
+        public int DealerId { get; set; }
 
-        public string Model { get; set; }
+        public DateTime Date { get; set; }
 
-        public Category Category { get; set; }
-
-        public decimal Price { get; set; }
+        public decimal Amount { get; set; }
 
         //public int total_quantity_sold { get; set; }
 

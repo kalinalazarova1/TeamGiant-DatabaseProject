@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using VehicleVendor.Data;
 using VehicleVendor.Data.Repositories;
+using VehicleVendor.Models;
 using System.Linq;
 using System.IO;
 using Newtonsoft.Json;
@@ -28,15 +29,14 @@ namespace VehicleVendor.Reports.JsonReportSQLServerGenerator
             {
                 var data = new JsonReportModel
                 {
-                    ProductId = rep.ProductId,
-                    Category = rep.Category,
-                    Model = rep.Model,
-                    Price = rep.Price
+                    Date = rep.Date,
+                    DealerId = rep.DealerId,
+                    Amount = rep.Amount
                 };
 
                 string json = JsonConvert.SerializeObject(data, Formatting.Indented);
 
-                using (StreamWriter sw = new StreamWriter(path + rep.ProductId + ".json"))
+                using (StreamWriter sw = new StreamWriter(path + rep.Date.ToShortDateString() + ".json"))
                 {
                     sw.WriteLine(json);
                 }
@@ -45,14 +45,18 @@ namespace VehicleVendor.Reports.JsonReportSQLServerGenerator
 
         private List<JsonReportModel> GetReportData()
         {
-            var collection = this.repository.Vehicles
-                .Select(x => new JsonReportModel
+            var collection = this.repository.Sales
+                .Join(this.repository.SalesDetails, h => h.Id, d => d.SaleId, (h, d) => new { h = h, d = d })
+                .Join(this.repository.Dealers, s => s.h.DealerId, d => d.Id, (s, d) => new { s = s, d = d })
+                .Join(this.repository.Countries, a => a.d.CountryId, c => c.Id, (a, c) => new { a = a, c = c })
+                .Join(this.repository.Vehicles, i => i.a.s.d.VehicleId, p => p.Id, (i, p) => new { i = i, p = p})
+                .Select(f => new JsonReportModel() 
                 {
-                    ProductId = x.Id,
-                    Model = x.Name,
-                    Category = x.Category,
-                    Price = x.Price
-                }).ToList();
+                    Date = f.i.a.s.h.SaleDate,
+                    DealerId = f.i.a.d.Id,
+                    Amount = f.i.a.s.d.Quantity * f.p.Price
+                })
+                .ToList();
 
             return collection;
         }

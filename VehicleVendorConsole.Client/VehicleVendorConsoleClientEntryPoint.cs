@@ -15,25 +15,26 @@
     {
         public static void Main()
         {
-            //var repo = new VehicleVendorRepository(
-            //    new IVehicleVendorDbContext[]
-            //    { 
-            //        new VehicleVendorDbContext()
-            //        //new VehicleVendorDbContextInMySql() 
-            //    });
-            //var repoMySql = new VehicleVendorMySqlRepository(new VehicleVendorMySqlDbContext());
-            //repoMySql.Dealers.All(d => true);
-            //var nissanMongoDb = new VehicleVendorMongoDb();
-            //var mongoLoader = new MongoLoader(repo, nissanMongoDb);
-            //mongoLoader.LoadRepository();
-            //repo.SaveChanges();
+            var repo = new VehicleVendorRepository(
+                new IVehicleVendorDbContext[]
+                { 
+                    new VehicleVendorDbContext()
+                    //new VehicleVendorDbContextInMySql() 
+                });
+            var repoMySql = new VehicleVendorMySqlRepository(new VehicleVendorMySqlDbContext());
+            repoMySql.Add<Country>(new Country());
+            repoMySql.SaveChanges();
+            var nissanMongoDb = new VehicleVendorMongoDb();
+            var mongoLoader = new MongoLoader(repo, nissanMongoDb);
+            mongoLoader.LoadRepository();
+            repo.SaveChanges();
 
-            //var xmlimporter = new XmlImporter(repo);
-            //var parseResult = xmlimporter.ParseDiscounts(@"..\..\..\Discounts.xml", @"..\..\..\Discounts.xsd");
-            //mongoLoader.LoadDiscounts(parseResult);
-            //mongoLoader.LoadDiscountsInMongo(parseResult);
+            var xmlimporter = new XmlImporter(repo);
+            var parseResult = xmlimporter.ParseDiscounts(@"..\..\..\Discounts.xml", @"..\..\..\Discounts.xsd");
+            mongoLoader.LoadDiscounts(parseResult);
+            repo.SaveChanges();
 
-            //repo.SaveChanges();
+            mongoLoader.LoadDiscountsInMongo(parseResult);
 
             // sample add sale:
             // ============================================================
@@ -46,36 +47,39 @@
             //repo.SaveChanges();
 
 
-            //var zipExLoader = new ZipExcelLoader(repo);
-            //zipExLoader.LoadRepository();
-            //repo.SaveChanges();
+            var zipExLoader = new ZipExcelLoader(repo);
+            zipExLoader.LoadRepository();
+            repo.SaveChanges();
+
+            repoMySql.Add<Dealer>(new Dealer());
+            repoMySql.SaveChanges();
 
             // =============================================================
 
             // sample generate report Excel:
             // =============================================================
-             //var excelReporter = new ExcelReportsSQLiteGenerator(repo, new DateTime(2014, 8, 1), new DateTime(2014, 9, 1));
-             //excelReporter.GenerateReport();
+            var excelReporter = new ExcelReportsSQLiteGenerator(repo, new DateTime(2014, 8, 1), new DateTime(2014, 9, 1));
+            excelReporter.GenerateReport();
             // =============================================================
 
             // =============================================================
             // Pdf file isngenerated in the main folder
             // Example usage of the PDF Report Generator:
-            //GeneratePDF pdf = new GeneratePDF(repo);
-            //pdf.Report("../../PdfReport.pdf");
+            GeneratePDF pdf = new GeneratePDF(repo);
+            pdf.Report("../../PdfReport.pdf");
             // =============================================================
 
             // =============================================================
             // Example usage of the JSON Report Generator:
-            //JsonReportSQLServerGenerator json = new JsonReportSQLServerGenerator(repo);
-            //json.GenerateReport();
+            JsonReportSQLServerGenerator json = new JsonReportSQLServerGenerator(repo);
+            json.GenerateReport();
             // =============================================================
 
             // =============================================================
             // Example usage of importing Jsons in MySql:
             // First generate JSON reports
-            //MySqlDataJsonGenerator jsonToMySql = new MySqlDataJsonGenerator(repo);
-            //jsonToMySql.WriteJsonsReportsToMySql();
+            MySqlDataJsonGenerator jsonToMySql = new MySqlDataJsonGenerator(repo, repoMySql);
+            jsonToMySql.WriteJsonsReportsToMySql();
             // =============================================================
 
             // Example usage of the repository:
