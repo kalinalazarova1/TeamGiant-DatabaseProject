@@ -19,6 +19,14 @@
             this.database = mongoServer.GetDatabase(databaseName);
         }
 
+        public MongoDatabase Database 
+        { 
+            get
+            {
+                return this.database;
+            }
+        }
+
         public IEnumerable<BsonDocument> GetDocument(string documentName)
         {
             var collection = this.database.GetCollection(documentName);

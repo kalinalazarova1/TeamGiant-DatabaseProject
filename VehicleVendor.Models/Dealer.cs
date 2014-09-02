@@ -1,4 +1,5 @@
-﻿namespace VehicleVendor.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+namespace VehicleVendor.Models
 {
     public class Dealer
     {
@@ -9,6 +10,9 @@
         public string Address { get; set; }
 
         public int CountryId { get; set; }
+
+        [NotMapped]
+        public double Discount { get; set; }
 
         public virtual Country Country { get; set; }
     }
