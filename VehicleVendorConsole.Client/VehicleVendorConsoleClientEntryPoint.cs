@@ -7,6 +7,7 @@
     using VehicleVendor.Models;
     using VehicleVendor.Reports;
     using PdfReportCreator;
+    using VehicleVendorConsole.Client.XmlInput;
 
     public class VehicleVendorConsoleClientEntryPoint
     {
@@ -25,7 +26,11 @@
             mongoLoader.LoadRepository();
             repo.SaveChanges();
 
-
+			var xmlimporter = new XmlImporter(repo);
+            var parseResult = xmlimporter.ParseDiscounts(@"..\..\..\Discounts.xml", @"..\..\..\Discounts.xsd");
+            mongoLoader.LoadDiscounts(parseResult);
+           
+            repo.SaveChanges();
 
             // sample add sale:
             // ============================================================

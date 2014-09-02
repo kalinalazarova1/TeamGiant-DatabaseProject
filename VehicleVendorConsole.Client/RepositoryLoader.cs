@@ -1,5 +1,6 @@
 ﻿namespace VehicleVendorConsole.Client
 {
+    using System.Collections.Generic;
     using System.Linq;
     using VehicleVendor.Data;
     using VehicleVendor.Data.Repositories;
@@ -14,6 +15,19 @@
         {
             this.repo = repo;
             this.nissanMongoDb = nissanMongoDb;
+        }
+
+        public void LoadDiscounts(IDictionary<int, double> discountParameters)
+        {
+            foreach (var discount in discountParameters)
+            {
+                repo.Add<Discount>(
+                    new Discount()
+                    {
+                        Amount = discount.Value,
+                        DealerId = discount.Key
+                    });
+            }
         }
 
         public void LoadRepository()
