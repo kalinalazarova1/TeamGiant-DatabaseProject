@@ -71,13 +71,14 @@
   <ItemGroup>
     <Compile Include="ExcelReportsSQLiteGenerator\ExcelReportsSQLiteGenerator.cs" />
     <Compile Include="IReportGenerator.cs" />
-    <Compile Include="JsonReportSQLServerGenerator\JsonReportModel.cs" />
+    <Compile Include="JsonReportSQLServerGenerator\JsonCountryReportModel.cs" />
+    <Compile Include="JsonReportSQLServerGenerator\JsonDealerReportModel.cs" />
+    <Compile Include="JsonReportSQLServerGenerator\JsonIncomeReportModel.cs" />
     <Compile Include="JsonReportSQLServerGenerator\JsonReportSQLServerGenerator.cs" />
-    <Compile Include="JsonReportSQLServerGenerator\ObjectIdConverter.cs" />
-    <Compile Include="MySqlDataJsonGenerator\MySqlDataJsonGenerator.cs" />
+    <Compile Include="MySqlDataJsonLoader\MySqlDataJsonLoader.cs" />
     <Compile Include="PdfReportSQLServerGenerator\CarsPdfRow.cs" />
     <Compile Include="PdfReportSQLServerGenerator\CellsFactory.cs" />
-    <Compile Include="PdfReportSQLServerGenerator\GeneratePDF.cs" />
+    <Compile Include="PdfReportSQLServerGenerator\PdfReportSQLServerGenerator.cs" />
     <Compile Include="PdfReportSQLServerGenerator\PdfCells\DataCell.cs" />
     <Compile Include="PdfReportSQLServerGenerator\PdfCells\HeaderCell.cs" />
     <Compile Include="PdfReportSQLServerGenerator\PdfCells\PdfCell.cs" />

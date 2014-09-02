@@ -43,60 +43,120 @@ namespace VehicleVendor.WPF
 
         public void OnLoadMongoClick(object sender, RoutedEventArgs e)
         {
-            var mongoLoader = new MongoLoader(this.repo, this.nissanMongoDb);
-            mongoLoader.LoadRepository();
-            repo.SaveChanges();
+            try 
+            { 
+                var mongoLoader = new MongoLoader(this.repo, this.nissanMongoDb);
+                mongoLoader.LoadRepository();
+                repo.SaveChanges();
+                Print("Countries, dealers and vehicle data from MongoDB successfully loaded.");
+            }
+            catch (Exception ex)
+            {
+                Print(ex.Message);
+            }
         }
 
         public void OnXMLToSQLClick(object sender, RoutedEventArgs e)
         {
-            var mongoLoader = new MongoLoader(this.repo, this.nissanMongoDb);
-            mongoLoader.LoadRepository();
-            var xmlimporter = new XmlImporter(repo);
-            var parseResult = xmlimporter.ParseDiscounts(@"..\..\..\Discounts.xml", @"..\..\..\Discounts.xsd");
-            mongoLoader.LoadDiscounts(parseResult);
-            repo.SaveChanges();
+            try
+            {
+                var xmlParser = new XmlParser(repo);
+                var parseResult = xmlParser.ParseDiscounts(@"..\..\..\Discounts.xml", @"..\..\..\Discounts.xsd");
+                var xmlLoader = new XmlLoader(repo, parseResult);
+                xmlLoader.LoadRepository();
+                repo.SaveChanges();
+                Print("Discounts data from XML to SQL Server successfuly loaded.");
+            }
+            catch (Exception ex)
+            {
+                Print(ex.Message);
+            }
         }
 
         public void OnXMLToMongoClick(object sender, RoutedEventArgs e)
         {
-            var xmlimporter = new XmlImporter(repo);
-            var parseResult = xmlimporter.ParseDiscounts(@"..\..\..\Discounts.xml", @"..\..\..\Discounts.xsd");
-            var mongoLoader = new MongoLoader(this.repo, this.nissanMongoDb);
-            mongoLoader.LoadDiscountsInMongo(parseResult);
+            try
+            { 
+                var xmlParser = new XmlParser(repo);
+                var parseResult = xmlParser.ParseDiscounts(@"..\..\..\Discounts.xml", @"..\..\..\Discounts.xsd");
+                var mongoLoader = new MongoLoader(this.repo, this.nissanMongoDb);
+                mongoLoader.LoadDiscountsInMongo(parseResult);
+                Print("Discounts data from XML to MongoDB successfuly loaded.");
+            }
+            catch (Exception ex)
+            {
+                Print(ex.Message);
+            }
         }
 
         public void OnLoadExcelZipClick(object sender, RoutedEventArgs e)
         {
-            var zipExLoader = new ZipExcelLoader(repo);
-            zipExLoader.LoadRepository();
-            repo.SaveChanges();
+            try
+            {
+                var zipExLoader = new ZipExcelLoader(repo);
+                zipExLoader.LoadRepository();
+                repo.SaveChanges();
+                Print("Sales from zipped Excel 2003 files to SQL Server successfuly loaded.");
+            }
+            catch (Exception ex)
+            {
+                Print(ex.Message);
+            }
         }
 
         public void OnGenerateExcelClick(object sender, RoutedEventArgs e)
         {
-            var excelReporter = new ExcelReportsSQLiteGenerator(repo, new DateTime(2014, 8, 1), new DateTime(2014, 9, 1));
-            excelReporter.GenerateReport();
+            try
+            {
+                var excelReporter = new ExcelReportsSQLiteGenerator(repoMySql, new DateTime(2014, 8, 1), new DateTime(2014, 9, 1));
+                excelReporter.GenerateReport();
+                Print("Excel 2007 report from SQLite and MySql is completed.");
+            }
+            catch (Exception ex)
+            {
+                Print(ex.Message);
+            }
         }
 
         public void OnGeneratePdfReportClick(object sender, RoutedEventArgs e)
         {
-            GeneratePDF pdf = new GeneratePDF(repo);
-            pdf.Report("../../PdfReport.pdf");
+            try
+            {
+                var pdfReporter = new PdfReportSQLServerGenerator(repo);
+                pdfReporter.GenerateReport();
+                Print("PDF report from SQL is completed.");
+            }
+            catch (Exception ex)
+            {
+                Print(ex.Message);
+            }
         }
 
         public void OnGenerateJSONClick(object sender, RoutedEventArgs e)
         {
-            JsonReportSQLServerGenerator json = new JsonReportSQLServerGenerator(repo);
-            json.GenerateReport();
-            MySqlDataJsonGenerator jsonToMySql = new MySqlDataJsonGenerator(this.repo, this.repoMySql);
-            jsonToMySql.WriteJsonsReportsToMySql();
-            
+            try
+            {
+                var jsonReporter = new JsonReportSQLServerGenerator(repo);
+                jsonReporter.GenerateReport();
+
+                var jsonToMySql = new MySqlDataJsonLoader(repo, repoMySql);
+                jsonToMySql.WriteJsonsReportsToMySql();
+                Print("Data from SQL to JSON and then to MySQL is successfully transferred.");
+            }
+            catch (Exception ex)
+            {
+                Print(ex.Message);
+            }
         }
 
         public void OnGenerateXMLReportClick(object sender, RoutedEventArgs e)
         {
+            
+        }
 
+        public void Print(string message)
+        {
+            this.Msg.Text = message;
         }
     }
 }

@@ -47,5 +47,17 @@ namespace VehicleVendor.Reports {
                 this["SQLiteConnectionString"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("../../PdfReport.pdf")]
+        public string PDFFileName {
+            get {
+                return ((string)(this["PDFFileName"]));
+            }
+            set {
+                this["PDFFileName"] = value;
+            }
+        }
     }
 }

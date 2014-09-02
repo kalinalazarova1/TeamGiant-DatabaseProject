@@ -11,13 +11,13 @@
 
     public class ExcelReportsSQLiteGenerator : IReportGenerator
     {
-        private IVehicleVendorRepository repo;
+        private IVehicleVendorMySqlRepository repoMySql;
         private DateTime start;
         private DateTime end;
 
-        public ExcelReportsSQLiteGenerator(IVehicleVendorRepository repo, DateTime start, DateTime end)
+        public ExcelReportsSQLiteGenerator(IVehicleVendorMySqlRepository repoMySql, DateTime start, DateTime end)
         {
-            this.repo = repo;
+            this.repoMySql = repoMySql;
             this.start = start;
             this.end = end;
         }
@@ -67,16 +67,11 @@
                         {
                             string dealer = (string)costsReader["Dealer"];
                             decimal sales = 0m;
-                            var records1 = this.repo.Sales
-                                .Where(s => s.SaleDate <= this.end && s.SaleDate >= this.start && s.Dealer.Company == dealer);
-                            var records = this.repo.Sales
-                                .Where(s => s.SaleDate <= this.end && s.SaleDate >= this.start && s.Dealer.Company == dealer)
-                                .Join(this.repo.SalesDetails, h => h.Id, d => d.SaleId, (h, d) => new { h = h, d = d })
-                                .Join(this.repo.Vehicles, s => s.d.Vehicle.Id, v => v.Id, (s, v) => new { s = s, v = v });
-
+                            var records = this.repoMySql.Incomes.Where(i => i.Dealer.Company == dealer);
+                                
                             if (records.Count() > 0)
                             {
-                                sales = records.Sum(r => r.s.d.Quantity * r.v.Price);
+                                sales = records.Sum(r => r.Amount);
                             }
 
                             decimal costs = ((decimal)costsReader["ConstCosts"]) / 30m * (decimal)(this.end - this.start).TotalDays + (decimal)costsReader["SaleCosts"] * sales;
