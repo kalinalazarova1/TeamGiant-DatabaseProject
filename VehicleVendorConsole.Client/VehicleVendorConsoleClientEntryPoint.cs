@@ -22,13 +22,14 @@
             var repoMySql = new VehicleVendorMySqlRepository(new VehicleVendorMySqlDbContext());
             repoMySql.Dealers.All(d => true);
             var nissanMongoDb = new VehicleVendorMongoDb();
-            var mongoLoader = new RepositoryLoader(repo, nissanMongoDb);
+            var mongoLoader = new MongoLoader(repo, nissanMongoDb);
             mongoLoader.LoadRepository();
             repo.SaveChanges();
-
+            
 			var xmlimporter = new XmlImporter(repo);
             var parseResult = xmlimporter.ParseDiscounts(@"..\..\..\Discounts.xml", @"..\..\..\Discounts.xsd");
             mongoLoader.LoadDiscounts(parseResult);
+            mongoLoader.LoadDiscountsInMongo(parseResult);
            
             repo.SaveChanges();
 

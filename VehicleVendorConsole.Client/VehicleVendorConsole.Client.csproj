@@ -65,7 +65,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="RepositoryLoader.cs" />
+    <Compile Include="MongoLoader.cs" />
     <Compile Include="IRepositoryLoader.cs" />
     <Compile Include="VehicleVendorConsoleClientEntryPoint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

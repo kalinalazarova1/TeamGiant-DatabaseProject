@@ -1,17 +1,18 @@
 ﻿namespace VehicleVendorConsole.Client
 {
+    using MongoDB.Driver.Builders;
     using System.Collections.Generic;
     using System.Linq;
     using VehicleVendor.Data;
     using VehicleVendor.Data.Repositories;
     using VehicleVendor.Models;
     
-    public class RepositoryLoader : IRepositoryLoader
+    public class MongoLoader : IRepositoryLoader
     {
         private IVehicleVendorRepository repo;
         private IVehicleVendorMongoDb nissanMongoDb;
 
-        public RepositoryLoader(IVehicleVendorRepository repo, IVehicleVendorMongoDb nissanMongoDb)
+        public MongoLoader(IVehicleVendorRepository repo, IVehicleVendorMongoDb nissanMongoDb)
         {
             this.repo = repo;
             this.nissanMongoDb = nissanMongoDb;
@@ -27,6 +28,17 @@
                         Amount = discount.Value,
                         DealerId = discount.Key
                     });
+            }
+        }
+
+        public void LoadDiscountsInMongo(IDictionary<int, double> discountParameters)
+        {
+            foreach (var discount in discountParameters)
+            {
+                var company = this.repo.Dealers.First(d => d.Id == discount.Key).Company;
+                var query = Query<Dealer>.EQ(d => d.Company, company);
+                var update = Update<Dealer>.Set(d => d.Discount, discount.Value);
+                this.nissanMongoDb.Database.GetCollection<Dealer>("Dealers").Update(query, update);
             }
         }
 
@@ -47,9 +59,9 @@
                     this.repo.Add<Vehicle>(
                         new Vehicle()
                         {
-                            Name = item["name"].ToString(),
-                            Price = (decimal)item["price"].ToDouble(),
-                            Category = (Category)item["category"].ToInt32()
+                            Name = item["Name"].ToString(),
+                            Price = (decimal)item["Price"].ToDouble(),
+                            Category = (Category)item["Category"].ToInt32()
                         });
                 }
             }
@@ -79,13 +91,13 @@
                 var dealers = this.nissanMongoDb.GetDocument("Dealers");
                 foreach (var item in dealers)
                 {
-                    var countryName = item["country"].ToString();
+                    var countryName = item["Country"].ToString();
                     var country = this.repo.Countries.Local.First(c => c.Name == countryName);
                     this.repo.Add<Dealer>(
                         new Dealer()
                         {
-                            Company = item["company"].ToString(),
-                            Address = item["address"].ToString(),
+                            Company = item["Company"].ToString(),
+                            Address = item["Address"].ToString(),
                             Country = country
                         });
                 }
