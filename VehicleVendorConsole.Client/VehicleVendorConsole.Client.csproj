@@ -72,7 +72,6 @@
     <Compile Include="XmlInput\XmlImporter.cs" />
     <Compile Include="XmlInput\XmlParser.cs" />
     <Compile Include="XmlLoader.cs" />
-	<Compile Include="XmlInput\XmlImporter.cs" />
     <Compile Include="ZipExcelLoader.cs" />
     <Compile Include="ZipExcelLoaderNew.cs" />
   </ItemGroup>
