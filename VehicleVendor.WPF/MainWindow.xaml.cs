@@ -99,7 +99,7 @@
         {
             try
             {
-                var zipExLoader = new ZipExcelLoaderNew(repo);
+                var zipExLoader = new ZipExcelLoaderNonCom(repo);
                 zipExLoader.LoadRepository();
                 repo.SaveChanges();
                 Print("Sales from zipped Excel 2003 files to SQL Server successfuly loaded.");

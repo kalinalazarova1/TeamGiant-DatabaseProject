@@ -37,7 +37,7 @@
             xmlLoader.LoadRepository();
             repo.SaveChanges();
 
-            var zipExLoader = new ZipExcelLoaderNew(repo);
+            var zipExLoader = new ZipExcelLoaderNonCom(repo);
             zipExLoader.LoadRepository();
             repo.SaveChanges();
 
