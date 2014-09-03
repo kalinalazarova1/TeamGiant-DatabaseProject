@@ -38,7 +38,7 @@
 
                 string json = JsonConvert.SerializeObject(data, Formatting.Indented);
 
-                using (StreamWriter sw = new StreamWriter(path + rep.DealerId + rep.Date.ToShortDateString() + ".json"))
+                using (StreamWriter sw = new StreamWriter(path + rep.DealerId + rep.Date.Day + rep.Date.Month + rep.Date.Year + ".json"))
                 {
                     sw.WriteLine(json);
                 }

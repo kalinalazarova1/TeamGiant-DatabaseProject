@@ -156,7 +156,7 @@ namespace VehicleVendor.Reports.MySqlDataJsonGenerator
                 {
                     try
                     {
-                        currJsonString = this.ReadJsonReport(@"../../Reports/" + id + date.ToShortDateString() + ".json");
+                        currJsonString = this.ReadJsonReport(@"../../Reports/" + id + date.Day + date.Month + date.Year + ".json");
                         var currJsonModel = this.ConvertJsonIncomeReports(currJsonString);
                         jsonIncomeModels.Add(currJsonModel);
                     }
