@@ -108,13 +108,13 @@
             //Find Dealer and generate Discount entry
             var currentCompany = dealerSchema["company"];
             var dealers = this.repo.Dealers.Where(d => d.Company == currentCompany);
-            if (dealers == null)
+            if (dealers == null || dealers.Count() == 0)
             {
                 throw new ArgumentException(string.Format(NoDealer, currentCompany));
             }
 
             var currentCountry = dealerSchema["country"];
-            var currentDealer = dealers.Where(d => d.Country.Name == currentCountry).First();
+            var currentDealer = dealers.Where(d => d.Country.Name == currentCountry).FirstOrDefault();
             if (currentDealer == null)
             {
                 throw new ArgumentException(string.Format(NoDealerInCountry, currentCountry));

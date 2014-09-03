@@ -27,6 +27,7 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VehicleVendor.WPF", "VehicleVendor.WPF\VehicleVendor.WPF.csproj", "{830CFEAD-D8C0-40E9-94CF-8DD9F3E6DDEA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VehicleVendor.DataAceessData", "VehicleVendor.DataAceessData\VehicleVendor.DataAceessData.csproj", "{6F9C2621-695C-4BDE-881B-157DCAA75C07}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VehicleVendorSqLite.Model", "VehicleVendorSqLite.Model\VehicleVendorSqLite.Model.csproj", "{7826200E-08CE-4D11-80C9-1716FC116507}"
 EndProject
 Global
