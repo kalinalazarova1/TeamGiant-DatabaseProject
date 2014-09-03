@@ -28,7 +28,7 @@
             string extractPath = @"..\..\extracted";
             if (Directory.Exists(extractPath))
             {
-                Directory.Delete(extractPath);
+                Directory.Delete(extractPath, true);
             }
 
             //2. create \extracted
@@ -99,10 +99,10 @@
                             Sale sale = new Sale() { DealerId = dealerId, SaleDate = saleDate };
                             this.repo.Add<Sale>(sale);
 
-                            string sqlString = "select [Quantity],[VehicleId] from [@sheetName];";
+                            string sqlString = "select * from [" + sheetName + "];";
 
                             OleDbCommand cmdGetRows = new OleDbCommand(sqlString, db_Con);
-                            cmdGetRows.Parameters.AddWithValue("@sheetName", sheetName);
+                            //cmdGetRows.Parameters.AddWithValue("@sheetName", sheetName);
 
                             OleDbDataReader reader = cmdGetRows.ExecuteReader();
                             using (reader)
