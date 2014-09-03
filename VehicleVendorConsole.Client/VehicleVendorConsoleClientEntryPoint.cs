@@ -40,13 +40,13 @@
 
             var excelReporter = new ExcelReportsSQLiteGenerator(repoMySql, new DateTime(2014, 8, 1), new DateTime(2014, 9, 1));
             excelReporter.GenerateReport();
-            
+
             var pdfReporter = new PdfReportSQLServerGenerator(repo);
             pdfReporter.GenerateReport();
-            
+
             var jsonReporter = new JsonReportSQLServerGenerator(repo);
             jsonReporter.GenerateReport();
-            
+
             var jsonToMySql = new MySqlDataJsonLoader(repo, repoMySql);
             jsonToMySql.WriteJsonsReportsToMySql();
 

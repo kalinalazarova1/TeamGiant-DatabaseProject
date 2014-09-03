@@ -76,7 +76,7 @@
     <Compile Include="JsonReportSQLServerGenerator\JsonIncomeReportModel.cs" />
     <Compile Include="JsonReportSQLServerGenerator\JsonReportSQLServerGenerator.cs" />
     <Compile Include="MySqlDataJsonLoader\MySqlDataJsonLoader.cs" />
-    <Compile Include="PdfReportSQLServerGenerator\CarsPdfRow.cs" />
+    <Compile Include="PdfReportSQLServerGenerator\PdfReportModel.cs" />
     <Compile Include="PdfReportSQLServerGenerator\CellsFactory.cs" />
     <Compile Include="PdfReportSQLServerGenerator\PdfReportSQLServerGenerator.cs" />
     <Compile Include="PdfReportSQLServerGenerator\PdfCells\DataCell.cs" />
@@ -84,7 +84,6 @@
     <Compile Include="PdfReportSQLServerGenerator\PdfCells\PdfCell.cs" />
     <Compile Include="PdfReportSQLServerGenerator\PdfCells\SummaryCell.cs" />
     <Compile Include="PdfReportSQLServerGenerator\PdfCells\TitleCell.cs" />
-    <Compile Include="PdfReportSQLServerGenerator\PdfRow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReportSettings.Designer.cs">
       <AutoGen>True</AutoGen>
