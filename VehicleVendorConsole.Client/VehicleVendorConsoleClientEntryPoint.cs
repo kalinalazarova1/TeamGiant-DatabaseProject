@@ -34,7 +34,6 @@
             xmlLoader.LoadRepository();
             repo.SaveChanges();
 
-
             var excelReporter = new ExcelReportsSQLiteGenerator(repoMySql, new DateTime(2014, 8, 1), new DateTime(2014, 9, 1));
             excelReporter.GenerateReport();
             
@@ -45,7 +44,10 @@
             jsonReporter.GenerateReport();
             
             var jsonToMySql = new MySqlDataJsonLoader(repo, repoMySql);
-            jsonToMySql.WriteJsonsReportsToMySql(); 
+            jsonToMySql.WriteJsonsReportsToMySql();
+
+            var xmlReporter = new XmlReportGenerator(repo, new DateTime(2014, 01, 01), DateTime.Now);
+            xmlReporter.GenerateReport();
         }
     }
 }
