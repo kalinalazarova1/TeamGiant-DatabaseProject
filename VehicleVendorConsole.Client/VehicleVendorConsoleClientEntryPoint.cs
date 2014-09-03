@@ -48,7 +48,7 @@
 
             var jsonReporter = new JsonReportSQLServerGenerator(repo);
             jsonReporter.GenerateReport();
-            
+
             var jsonToMySql = new MySqlDataJsonLoader(repo, repoMySql);
             jsonToMySql.WriteJsonsReportsToMySql();
 

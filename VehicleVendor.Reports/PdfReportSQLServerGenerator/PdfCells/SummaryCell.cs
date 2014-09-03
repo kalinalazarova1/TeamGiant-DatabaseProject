@@ -5,8 +5,8 @@
 
     public class SummaryCell : PdfCell
     {
-        public SummaryCell(PdfPTable table, string data)
-            : base(table, data, Color.WHITE, 3)
+        public SummaryCell(PdfPTable table, string data, int columnSpan)
+            : base(table, data, Color.WHITE, columnSpan)
         {
         }
     }
