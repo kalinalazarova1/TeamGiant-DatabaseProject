@@ -18,19 +18,6 @@
             this.nissanMongoDb = nissanMongoDb;
         }
 
-        public void LoadDiscounts(IDictionary<int, double> discountParameters)
-        {
-            foreach (var discount in discountParameters)
-            {
-                repo.Add<Discount>(
-                    new Discount()
-                    {
-                        Amount = discount.Value,
-                        DealerId = discount.Key
-                    });
-            }
-        }
-
         public void LoadDiscountsInMongo(IDictionary<int, double> discountParameters)
         {
             foreach (var discount in discountParameters)

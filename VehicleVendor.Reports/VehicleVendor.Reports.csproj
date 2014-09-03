@@ -91,6 +91,11 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>ReportSettings.settings</DependentUpon>
     </Compile>
+    <Compile Include="XmlReportSqlServerGenerator\Classes\XmlCountryModel.cs" />
+    <Compile Include="XmlReportSqlServerGenerator\Classes\XmlDealerModel.cs" />
+    <Compile Include="XmlReportSqlServerGenerator\Classes\XmlSalesReportModel.cs" />
+    <Compile Include="XmlReportSqlServerGenerator\Classes\XmlDaySaleReportModel.cs" />
+    <Compile Include="XmlReportSqlServerGenerator\XmlReportGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VehicleVendor.Data\VehicleVendor.Data.csproj">
@@ -109,6 +114,7 @@
     <Content Include="x86\SQLite.Interop.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="XmlReportSqlServerGenerator\SampleSaleTest.xml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -117,7 +123,11 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>ReportSettings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="XmlReportSqlServerGenerator\ReportSchema.xsd">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

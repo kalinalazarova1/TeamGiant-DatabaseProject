@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sales_report xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://nissan.com/ReportSchema.xsd">
+  <country name="South Africa">
+    <dealer name="Kudu Motors">
+      <day_sale date="2014-08-31">36160000.00</day_sale>
+      <day_sale date="2014-08-31">36160000.00</day_sale>
+      <day_sale date="2014-08-31">288208610.00</day_sale>
+      <day_sale date="2014-08-31">288208610.00</day_sale>
+    </dealer>
+    <dealer name="Magnis">
+      <day_sale date="2014-08-31">36160000.00</day_sale>
+      <day_sale date="2014-08-31">36160000.00</day_sale>
+      <day_sale date="2014-08-31">288208610.00</day_sale>
+      <day_sale date="2014-08-31">288208610.00</day_sale>
+    </dealer>
+  </country>
+  <country name="China">
+    <dealer name="Beijing Yuntong Boao Car Trade">
+      <day_sale date="2014-08-31">826295310.00</day_sale>
+      <day_sale date="2014-08-31">826295310.00</day_sale>
+    </dealer>
+    <dealer name="Nissan Hong Kong">
+      <day_sale date="2014-08-31">826295310.00</day_sale>
+      <day_sale date="2014-08-31">826295310.00</day_sale>
+    </dealer>
+  </country>
+  <country name="USA">
+    <dealer name="Chevy Chase Nissan">
+      <day_sale date="2014-08-31">190548380.00</day_sale>
+      <day_sale date="2014-08-31">190548380.00</day_sale>
+    </dealer>
+    <dealer name="Glendale Nissan">
+      <day_sale date="2014-08-31">190548380.00</day_sale>
+      <day_sale date="2014-08-31">190548380.00</day_sale>
+    </dealer>
+  </country>
+  <country name="Brazil">
+    <dealer name="Grand Brasil Nissan">
+      <day_sale date="2014-08-31">387430410.00</day_sale>
+      <day_sale date="2014-08-31">387430410.00</day_sale>
+    </dealer>
+  </country>
+  <country name="Japan">
+    <dealer name="Nissan Motor Sales">
+      <day_sale date="2014-08-31">35482400.00</day_sale>
+      <day_sale date="2014-08-31">35482400.00</day_sale>
+    </dealer>
+  </country>
+  <country name="France">
+    <dealer name="Nissan Boulanger Auto">
+      <day_sale date="2014-08-31">62945790.00</day_sale>
+      <day_sale date="2014-08-31">62945790.00</day_sale>
+    </dealer>
+  </country>
+  <country name="Saudi Arabia">
+    <dealer name="Alhamrani United Company">
+      <day_sale date="2014-08-31">240109130.00</day_sale>
+      <day_sale date="2014-08-31">240109130.00</day_sale>
+    </dealer>
+  </country>
+  <country name="Germany">
+    <dealer name="Nissan Center Europe GmbH">
+      <day_sale date="2014-08-31">135811750.00</day_sale>
+      <day_sale date="2014-08-31">135811750.00</day_sale>
+    </dealer>
+  </country>
+  <country name="Bulgaria">
+    <dealer name="Nissan Sofia AD">
+      <day_sale date="2014-08-31">6755780.00</day_sale>
+      <day_sale date="2014-08-31">6755780.00</day_sale>
+    </dealer>
+  </country>
+</sales_report>

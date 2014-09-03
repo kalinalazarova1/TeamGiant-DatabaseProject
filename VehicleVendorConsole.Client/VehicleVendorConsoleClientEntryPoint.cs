@@ -8,6 +8,7 @@
     using VehicleVendor.Reports;
     using PdfReportCreator;
     using VehicleVendorConsole.Client.XmlInput;
+    using VehicleVendor.Reports.XmlReportSqlServerGenerator;
     using VehicleVendor.Reports.JsonReportSQLServerGenerator;
     using VehicleVendor.Reports.MySqlDataJsonGenerator;
 
@@ -33,11 +34,6 @@
             xmlLoader.LoadRepository();
             repo.SaveChanges();
 
-            mongoLoader.LoadDiscountsInMongo(parseResult);
-
-            var zipExLoader = new ZipExcelLoader(repo);
-            zipExLoader.LoadRepository();
-            repo.SaveChanges();
 
             var excelReporter = new ExcelReportsSQLiteGenerator(repoMySql, new DateTime(2014, 8, 1), new DateTime(2014, 9, 1));
             excelReporter.GenerateReport();

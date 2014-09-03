@@ -69,9 +69,12 @@
     <Compile Include="IRepositoryLoader.cs" />
     <Compile Include="VehicleVendorConsoleClientEntryPoint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="XmlInput\XmlImporter.cs" />
     <Compile Include="XmlInput\XmlParser.cs" />
     <Compile Include="XmlLoader.cs" />
+	<Compile Include="XmlInput\XmlImporter.cs" />
     <Compile Include="ZipExcelLoader.cs" />
+    <Compile Include="ZipExcelLoaderNew.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
