@@ -1,29 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using VehicleVendor.Data;
-using VehicleVendor.Data.Repositories;
-using VehicleVendor.Models;
-using VehicleVendor.Reports;
-using PdfReportCreator;
-using VehicleVendorConsole.Client;
-using VehicleVendorConsole.Client.XmlInput;
-using VehicleVendor.Reports.JsonReportSQLServerGenerator;
-using VehicleVendor.Reports.MySqlDataJsonGenerator;
-
-namespace VehicleVendor.WPF
+﻿namespace VehicleVendor.WPF
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Data;
+    using System.Windows.Documents;
+    using System.Windows.Input;
+    using System.Windows.Media;
+    using System.Windows.Media.Imaging;
+    using System.Windows.Navigation;
+    using System.Windows.Shapes;
+    using VehicleVendor.Data;
+    using VehicleVendor.Data.Repositories;
+    using VehicleVendor.Models;
+    using VehicleVendor.Reports;
+    using PdfReportCreator;
+    using VehicleVendorConsole.Client;
+    using VehicleVendorConsole.Client.XmlInput;
+    using VehicleVendor.Reports.JsonReportSQLServerGenerator;
+    using VehicleVendor.Reports.MySqlDataJsonGenerator;
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -45,16 +45,15 @@ namespace VehicleVendor.WPF
         {
             var mongoLoader = new MongoLoader(this.repo, this.nissanMongoDb);
             mongoLoader.LoadRepository();
-            repo.SaveChanges();
+            this.repo.SaveChanges();
         }
 
         public void OnXMLToSQLClick(object sender, RoutedEventArgs e)
         {
-            var mongoLoader = new MongoLoader(this.repo, this.nissanMongoDb);
-            mongoLoader.LoadRepository();
-            var xmlimporter = new XmlImporter(repo);
+            var xmlLoader = new XmlLoader(this.repo);
+            var xmlimporter = new XmlImporter(this.repo);
             var parseResult = xmlimporter.ParseDiscounts(@"..\..\..\Discounts.xml", @"..\..\..\Discounts.xsd");
-            mongoLoader.LoadDiscounts(parseResult);
+            xmlLoader.LoadDiscounts(parseResult);
             repo.SaveChanges();
         }
 
