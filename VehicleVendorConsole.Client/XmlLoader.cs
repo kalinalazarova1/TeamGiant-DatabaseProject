@@ -1,18 +1,23 @@
 ﻿namespace VehicleVendorConsole.Client
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
     using VehicleVendor.Data.Repositories;
     using VehicleVendor.Models;
 
-    public class XmlLoader
+    public class XmlLoader : IRepositoryLoader
     {
-        private readonly IVehicleVendorRepository repo;
+        private IVehicleVendorRepository repo;
+        private IDictionary<int, double> discountParameters;
 
-        public XmlLoader(IVehicleVendorRepository repo)
+        public XmlLoader(IVehicleVendorRepository repo, IDictionary<int, double> discountParameters)
         {
             this.repo = repo;
+            this.discountParameters = discountParameters;
+        }
+
+        public void LoadRepository()
+        {
+            this.LoadDiscounts(this.discountParameters);
         }
 
         public void LoadDiscounts(IDictionary<int, double> discountParameters)
@@ -20,7 +25,11 @@
             foreach (var discount in discountParameters)
             {
                 this.repo.Add<Discount>(
-                    new Discount(){ Amount = discount.Value, DealerId = discount.Key });
+                    new Discount()
+                    {
+                        Amount = discount.Value,
+                        DealerId = discount.Key
+                    });
             }
         }
     }

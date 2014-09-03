@@ -8,7 +8,7 @@ using VehicleVendor.Models;
 
 namespace VehicleVendor.Reports.JsonReportSQLServerGenerator
 {
-    public class JsonReportModel
+    public class JsonIncomeReportModel
     {
         //[JsonConverter(typeof(ObjectIdConverter))]
         //public ObjectId _id { get; set; }

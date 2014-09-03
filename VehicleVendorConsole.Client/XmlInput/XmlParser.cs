@@ -8,7 +8,7 @@
     using System.Xml.Schema;
     using VehicleVendor.Data.Repositories;
 
-    public class XmlImporter
+    public class XmlParser
     {
         private const string NullOrEmptyPath = "Specified path is incorrect (null or empty)";
         private const string FileNotFoundExceptionFormat = "The specified {0} file does not exist";
@@ -20,7 +20,7 @@
         private readonly IVehicleVendorRepository repo;
         private XmlSchema schema;
 
-        public XmlImporter(IVehicleVendorRepository repo)
+        public XmlParser(IVehicleVendorRepository repo)
         {
             this.repo = repo;
         }

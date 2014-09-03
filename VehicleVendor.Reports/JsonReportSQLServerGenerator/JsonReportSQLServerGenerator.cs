@@ -1,13 +1,11 @@
-﻿using System.Collections.Generic;
-using VehicleVendor.Data;
-using VehicleVendor.Data.Repositories;
-using VehicleVendor.Models;
-using System.Linq;
-using System.IO;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Schema;
-namespace VehicleVendor.Reports.JsonReportSQLServerGenerator
+﻿namespace VehicleVendor.Reports.JsonReportSQLServerGenerator
 {
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using Newtonsoft.Json;
+    using VehicleVendor.Data.Repositories;
+
     public class JsonReportSQLServerGenerator : IReportGenerator
     {
         private IVehicleVendorRepository repository;
@@ -19,15 +17,19 @@ namespace VehicleVendor.Reports.JsonReportSQLServerGenerator
 
         public void GenerateReport()
         {
-            var reports = this.GetReportData();
-            this.WriteToFileSystem(@"../../Reports/", reports);
+            var countries = this.GetCountriesData();
+            this.WriteToFileCountries(@"../../Reports/", countries);
+            var dealers = this.GetDealersData();
+            this.WriteToFileDealers(@"../../Reports/", dealers);
+            var incomes = this.GetIncomesData();
+            this.WriteToFileIncomes(@"../../Reports/", incomes);
         }
 
-        private void WriteToFileSystem(string path, IEnumerable<JsonReportModel> reportCollection)
+        private void WriteToFileIncomes(string path, IEnumerable<JsonIncomeReportModel> reportCollection)
         {
             foreach (var rep in reportCollection)
             {
-                var data = new JsonReportModel
+                var data = new JsonIncomeReportModel
                 {
                     Date = rep.Date,
                     DealerId = rep.DealerId,
@@ -36,21 +38,60 @@ namespace VehicleVendor.Reports.JsonReportSQLServerGenerator
 
                 string json = JsonConvert.SerializeObject(data, Formatting.Indented);
 
-                using (StreamWriter sw = new StreamWriter(path + rep.Date.ToShortDateString() + ".json"))
+                using (StreamWriter sw = new StreamWriter(path + rep.DealerId + rep.Date.ToShortDateString() + ".json"))
                 {
                     sw.WriteLine(json);
                 }
             }
         }
 
-        private List<JsonReportModel> GetReportData()
+        private void WriteToFileDealers(string path, IEnumerable<JsonDealerReportModel> reportCollection)
+        {
+            foreach (var rep in reportCollection)
+            {
+                var data = new JsonDealerReportModel
+                {
+                    Company = rep.Company,
+                    CountryId = rep.CountryId,
+                    Address = rep.Address
+                };
+
+                string json = JsonConvert.SerializeObject(data, Formatting.Indented);
+
+                using (StreamWriter sw = new StreamWriter(path + rep.Company + ".json"))
+                {
+                    sw.WriteLine(json);
+                }
+            }
+        }
+
+        private void WriteToFileCountries(string path, IEnumerable<JsonCountryReportModel> reportCollection)
+        {
+            foreach (var rep in reportCollection)
+            {
+                var data = new JsonCountryReportModel
+                {
+                    Country = rep.Country,
+                    Region = rep.Region
+                };
+
+                string json = JsonConvert.SerializeObject(data, Formatting.Indented);
+
+                using (StreamWriter sw = new StreamWriter(path + rep.Country + ".json"))
+                {
+                    sw.WriteLine(json);
+                }
+            }
+        }
+
+        private List<JsonIncomeReportModel> GetIncomesData()
         {
             var collection = this.repository.Sales
                 .Join(this.repository.SalesDetails, h => h.Id, d => d.SaleId, (h, d) => new { h = h, d = d })
                 .Join(this.repository.Dealers, s => s.h.DealerId, d => d.Id, (s, d) => new { s = s, d = d })
                 .Join(this.repository.Countries, a => a.d.CountryId, c => c.Id, (a, c) => new { a = a, c = c })
                 .Join(this.repository.Vehicles, i => i.a.s.d.VehicleId, p => p.Id, (i, p) => new { i = i, p = p})
-                .Select(f => new JsonReportModel() 
+                .Select(f => new JsonIncomeReportModel() 
                 {
                     Date = f.i.a.s.h.SaleDate,
                     DealerId = f.i.a.d.Id,
@@ -61,45 +102,31 @@ namespace VehicleVendor.Reports.JsonReportSQLServerGenerator
             return collection;
         }
 
-        //static List<ExpenseModel> GetExpenseData()
-        //{
-        //    List<ExpenseModel> expensesCollection = new List<ExpenseModel>();
-        //    using (SQLStoreDb db = new SQLStoreDb())
-        //    {
-        //        var coll = (from vm in db.VendorMonths
-        //                    select new ExpenseModel
-        //                    {
-        //                        vendor_name = vm.Vendor.VendorName,
-        //                        month = vm.Month.MonthDate,
-        //                        expenses = vm.Expenses
-        //                    }).ToList();
+        private List<JsonDealerReportModel> GetDealersData()
+        {
+            var collection = this.repository.Dealers
+                .Select(d => new JsonDealerReportModel()
+                {
+                    Company = d.Company,
+                    Address = d.Address,
+                    CountryId = d.CountryId
+                })
+                .ToList();
 
+            return collection;
+        }
 
-        //        foreach (var exModel in coll)
-        //        {
-        //            expensesCollection.Add(exModel);
-        //        }
-        //    }
+        private List<JsonCountryReportModel> GetCountriesData()
+        {
+            var collection = this.repository.Countries
+                .Select(c => new JsonCountryReportModel()
+                {
+                    Country = c.Name,
+                    Region = c.Region
+                })
+                .ToList();
 
-        //    return expensesCollection;
-        //}
-
-        //public static void RecordReports(MongoDBAccess mongodb)
-        //{
-        //    string path = "Product-Reports\\";
-        //    var reportCollection = GetReportData();
-
-
-        //    mongodb.StoreInReportCollection(reportCollection);
-
-        //    WriteToFileSystem(path, mongodb.GetReportObjects());
-        //}
-
-        //public static void RecordExpenses(MongoDBAccess mongodb)
-        //{
-        //    var expensesCollection = GetExpenseData();
-        //    mongodb.StoreInExpensesCollection(expensesCollection);
-        //}
-
+            return collection;
+        }
     }
 }

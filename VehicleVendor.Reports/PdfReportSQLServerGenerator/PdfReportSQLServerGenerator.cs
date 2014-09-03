@@ -3,17 +3,16 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-
     using iTextSharp.text;
     using iTextSharp.text.pdf;
-
     using VehicleVendor.Data.Repositories;
+    using VehicleVendor.Reports;
 
-    public class GeneratePDF
+    public class PdfReportSQLServerGenerator : IReportGenerator
     {
         private IVehicleVendorRepository repository;
 
-        public GeneratePDF(IVehicleVendorRepository vehicleVendorRepository)
+        public PdfReportSQLServerGenerator(IVehicleVendorRepository vehicleVendorRepository)
         {
             this.repository = vehicleVendorRepository;
         }
@@ -21,8 +20,6 @@
         // Data cant be from the "GeneratePDF" or can be passed out
         private List<IGrouping<string, CarsPdfRow>> GetData()
         {
-            //VehicleVendorRepository repository = new VehicleVendorRepository(new IVehicleVendorDbContext[] { new VehicleVendorDbContext(), new VehicleVendorMySqlDbContext() });
-
             var collection = this.repository.Vehicles
                 .Select(x => new CarsPdfRow
                 {
@@ -36,14 +33,14 @@
             return collection;
         }
 
-        public void Report(string filePath)
+        public void GenerateReport()
         {
             // In case of DateTime usage
             //Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             var collection = GetData();
             decimal totalSum = 0;
             Document document = new Document();
-            PdfWriter writer = PdfWriter.GetInstance(document, new FileStream(filePath, FileMode.Create));
+            PdfWriter writer = PdfWriter.GetInstance(document, new FileStream(ReportSettings.Default.PDFFileName, FileMode.Create));
 
             document.Open();
 
