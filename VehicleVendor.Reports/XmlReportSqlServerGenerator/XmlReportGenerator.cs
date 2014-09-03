@@ -56,33 +56,6 @@
                 outputDir = pathToOutputDir;
             }
 
-            var sales = new XmlDaySaleReportModel[1]
-            {
-                new XmlDaySaleReportModel
-                {
-                    Date = new DateTime(2014, 05, 02),
-                    Value = 156230.00M
-                }
-            };
-
-            var dealers = new XmlDealerModel[1]
-            {
-                new XmlDealerModel
-                {
-                    Name = "Zambia Motors Co.",
-                    DaySale = sales
-                }
-            };
-
-            var countries = new XmlCountryModel[1]
-            {
-                new XmlCountryModel
-                {
-                    Name = "Zambia",
-                    Dealer = dealers
-                }
-            };
-
             var data = this.GetReportData();
 
             var serializer = new XmlSerializer(typeof(XmlSalesReportModel));
@@ -106,41 +79,53 @@
                 reportData = reportData.Where(sale => sale.Dealer.Company == this.dealer);
             }
 
-            var distinctCountries = reportData.Select(rd => new { Name = rd.Dealer.Country.Name, Id = rd.Dealer.CountryId }).Distinct();
-            var distinctDealers = reportData.Select(rd => new { Company = rd.Dealer.Company, DealerId = rd.Dealer.CountryId, CountryId = rd.Dealer.CountryId }).Distinct();
+            var distinctCountries = reportData
+                                              .Select(rd => new
+                                              {
+                                                  Name = rd.Dealer.Country.Name,
+                                                  Id = rd.Dealer.CountryId
+                                              })
+                                              .Distinct();
+
+            var distinctDealers = reportData
+                                            .Select(rd => new
+                                            {
+                                                Company = rd.Dealer.Company,
+                                                DealerId = rd.Dealer.CountryId,
+                                                CountryId = rd.Dealer.CountryId
+                                            })
+                                            .Distinct();
 
             var extractedData = distinctCountries
-                                          .Select(country => new
-                                          {
-                                              CountryName = country.Name,
-                                              Dealers = distinctDealers
-                                                                  .Where(dd => dd.CountryId == country.Id)
-                                                                  .Select(d => new
-                                                                  {
-                                                                      CompanyName = d.Company,
-                                                                      DaySales = reportData
-                                                                                           .Where(ds => d.DealerId == ds.DealerId)
-                                                                                           .Select(ds => new
-                                                                                           {
-                                                                                               Date = ds.SaleDate,
-                                                                                               Value = ds.SaleItems
-                                                                                                         .Select(si => (si.Quantity * si.Vehicle.Price))
-                                                                                                         .Sum()
-                                                                                           })
-                                                                  })
-                                          });
+                                                 .Select(country => new
+                                                 {
+                                                     CountryName = country.Name,
+                                                     Dealers = distinctDealers
+                                                                              .Where(dd => dd.CountryId == country.Id)
+                                                                              .Select(d => new
+                                                                              {
+                                                                                  CompanyName = d.Company,
+                                                                                  DaySales = reportData
+                                                                                                       .Where(ds => d.DealerId == ds.DealerId)
+                                                                                                       .Select(ds => new
+                                                                                                       {
+                                                                                                           Date = ds.SaleDate,
+                                                                                                           Value = ds.SaleItems
+                                                                                                                     .Select(si => (si.Quantity * si.Vehicle.Price))
+                                                                                                                     .Sum()
+                                                                                                       })
+                                                                              })
+                                                 });
 
             var countries = new List<XmlCountryModel>();
             foreach (var country in extractedData)
             {
                 var dealers = new List<XmlDealerModel>();
-                //var countryDealers = country.Dealers.Where(c => c.CountryId == country.CountryId);
                 foreach (var dealer in country.Dealers)
                 {
                     var daySales = new List<XmlDaySaleReportModel>();
-                    //var dealerDaySales = dealer.DaySales.Where(d => d.DealerID == dealer.DealerId);
                     foreach (var daySale in dealer.DaySales)
-                    { 
+                    {
                         var currentDaySale = new XmlDaySaleReportModel() { Date = daySale.Date, Value = daySale.Value };
                         daySales.Add(currentDaySale);
                     }

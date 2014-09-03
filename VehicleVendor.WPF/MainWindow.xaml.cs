@@ -1,29 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using VehicleVendor.Data;
-using VehicleVendor.Data.Repositories;
-using VehicleVendor.Models;
-using VehicleVendor.Reports;
-using PdfReportCreator;
-using VehicleVendorConsole.Client;
-using VehicleVendorConsole.Client.XmlInput;
-using VehicleVendor.Reports.JsonReportSQLServerGenerator;
-using VehicleVendor.Reports.MySqlDataJsonGenerator;
-
-namespace VehicleVendor.WPF
+﻿namespace VehicleVendor.WPF
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Data;
+    using System.Windows.Documents;
+    using System.Windows.Input;
+    using System.Windows.Media;
+    using System.Windows.Media.Imaging;
+    using System.Windows.Navigation;
+    using System.Windows.Shapes;
+    using VehicleVendor.Data;
+    using VehicleVendor.Data.Repositories;
+    using VehicleVendor.Models;
+    using VehicleVendor.Reports;
+    using PdfReportCreator;
+    using VehicleVendorConsole.Client;
+    using VehicleVendorConsole.Client.XmlInput;
+    using VehicleVendor.Reports.JsonReportSQLServerGenerator;
+    using VehicleVendor.Reports.MySqlDataJsonGenerator;
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -93,7 +93,7 @@ namespace VehicleVendor.WPF
         {
             try
             {
-                var zipExLoader = new ZipExcelLoader(repo);
+                var zipExLoader = new ZipExcelLoaderNew(repo);
                 zipExLoader.LoadRepository();
                 repo.SaveChanges();
                 Print("Sales from zipped Excel 2003 files to SQL Server successfuly loaded.");
