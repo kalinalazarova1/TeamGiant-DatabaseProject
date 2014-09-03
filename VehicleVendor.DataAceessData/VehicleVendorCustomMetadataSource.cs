@@ -7,7 +7,7 @@
     using Telerik.OpenAccess.Metadata;
     using Telerik.OpenAccess.Metadata.Fluent;
 
-    public partial class VehicleVendorMySqlDbContextMetadataSource : FluentMetadataSource
+    public class VehicleVendorCustomMetadataSource : FluentMetadataSource
     {
         public MappingConfiguration<DataAccessIncome> GetDataAccessIncomeMappingConfiguration()
         {

@@ -5,9 +5,13 @@
     using System.Drawing;
     using System.IO;
     using System.Linq;
+
+    using Telerik.OpenAccess;
     using OfficeOpenXml;
     using OfficeOpenXml.Style;
+
     using VehicleVendor.Data.Repositories;
+    using VehicleVendor.DataAceessData.Repository;
     using VehicleVendorSqLite.Model;
 
     public class ExcelReportsSQLiteGenerator : IReportGenerator
@@ -63,7 +67,7 @@
                 {
                     string dealer = item.Dealer;
                     decimal sales = 0m;
-                    var records = this.repoMySql.Incomes.Where(i => i.Dealer.Company == dealer);
+                    var records = this.repoMySql.DataAccessIncomes.Where(i => i.DataAccessDealer.Company == dealer); //.Where(i => i.DataAccessDealer.Company == dealer);
                                 
                     if (records.Count() > 0)
                     {

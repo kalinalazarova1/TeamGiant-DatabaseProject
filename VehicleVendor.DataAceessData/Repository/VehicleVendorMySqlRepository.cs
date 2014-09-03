@@ -6,9 +6,16 @@
 
     public class VehicleVendorMySqlRepository : IVehicleVendorMySqlRepository
     {
-        private IVehicleVendorMySqlDbContext context;
+        private IVehicleVendorMySqlDbContextUnitOfWork context;
 
-        public VehicleVendorMySqlRepository(IVehicleVendorMySqlDbContext context)
+        public VehicleVendorMySqlRepository()
+            : this(new VehicleVendorMySqlDbContext())
+        {
+            var initDb = new DatabaseInitializer(this.context);
+            initDb.UpdateDatabase();
+        }
+
+        public VehicleVendorMySqlRepository(IVehicleVendorMySqlDbContextUnitOfWork context)
         {
             this.context = context;
         }

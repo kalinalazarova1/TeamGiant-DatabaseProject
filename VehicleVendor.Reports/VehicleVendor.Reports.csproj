@@ -67,6 +67,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Telerik.OpenAccess, Version=2014.2.711.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExcelReportsSQLiteGenerator\ExcelReportsSQLiteGenerator.cs" />
@@ -97,6 +98,10 @@
     <Compile Include="XmlReportSqlServerGenerator\XmlReportGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\VehicleVendor.DataAceessData\VehicleVendor.DataAceessData.csproj">
+      <Project>{6F9C2621-695C-4BDE-881B-157DCAA75C07}</Project>
+      <Name>VehicleVendor.DataAceessData</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VehicleVendor.Data\VehicleVendor.Data.csproj">
       <Project>{65dc843d-93d5-4750-a20d-029116e0de1c}</Project>
       <Name>VehicleVendor.Data</Name>

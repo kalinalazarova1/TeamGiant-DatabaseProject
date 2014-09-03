@@ -16,6 +16,8 @@
     using System.Windows.Shapes;
     using VehicleVendor.Data;
     using VehicleVendor.Data.Repositories;
+    using VehicleVendor.DataAceessData;
+    using VehicleVendor.DataAceessData.Repository;
     using VehicleVendor.Models;
     using VehicleVendor.Reports;
     using PdfReportCreator;
@@ -40,7 +42,7 @@
         {
             InitializeComponent();
             this.repo = new VehicleVendorRepository(new IVehicleVendorDbContext[] { new VehicleVendorDbContext() });
-            this.repoMySql = new VehicleVendorMySqlRepository(new VehicleVendorMySqlDbContext());
+            this.repoMySql = new VehicleVendorMySqlRepository();
             this.nissanMongoDb = new VehicleVendorMongoDb();
             this.sqliteDb = new SqLiteContext();
         }

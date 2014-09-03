@@ -43,17 +43,15 @@
     <Reference Include="Telerik.OpenAccess.35.Extensions" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="VehicleVendorMySqlDbContextMetadataSource2.cs" />
+    <Compile Include="DatabaseInitializer.cs" />
     <Compile Include="DataAccessCountry.cs" />
     <Compile Include="DataAccessDealer.cs" />
     <Compile Include="DataAccessIncome.cs" />
-    <Compile Include="IVehicleVendorMySqlDbContext.cs" />
     <Compile Include="Repository\IVehicleVendorMySqlRepository.cs" />
     <Compile Include="Repository\VehicleVendorMySqlRepository.cs" />
     <Compile Include="VehicleVendorMySqlDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VehicleVendorMySqlDbContextMetadataSource.cs" />
-    <Compile Include="VehicleVendorMySqlDbContext2.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

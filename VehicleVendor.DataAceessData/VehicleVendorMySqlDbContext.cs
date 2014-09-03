@@ -24,7 +24,7 @@ namespace VehicleVendor.DataAceessData
 {
 	public partial class VehicleVendorMySqlDbContext : OpenAccessContext, IVehicleVendorMySqlDbContextUnitOfWork
 	{
-		private static string connectionStringName = @"";
+        private static string connectionStringName = @"NissanConnection";
 			
 		private static BackendConfiguration backend = GetBackendConfiguration();
 
@@ -49,6 +49,30 @@ namespace VehicleVendor.DataAceessData
         public VehicleVendorMySqlDbContext(string connection, BackendConfiguration backendConfiguration, MetadataSource metadataSource)
 			:base(connection, backendConfiguration, metadataSource)
 		{ }
+
+        public IQueryable<DataAccessIncome> DataAccessIncomes
+        {
+            get
+            {
+                return this.GetAll<DataAccessIncome>();
+            }
+        }
+
+        public IQueryable<DataAccessDealer> DataAccessDealers
+        {
+            get
+            {
+                return this.GetAll<DataAccessDealer>();
+            }
+        }
+
+        public IQueryable<DataAccessCountry> DataAccessCountries
+        {
+            get
+            {
+                return this.GetAll<DataAccessCountry>();
+            }
+        }
 			
 		public static BackendConfiguration GetBackendConfiguration()
 		{
@@ -71,6 +95,13 @@ namespace VehicleVendor.DataAceessData
 	
 	public interface IVehicleVendorMySqlDbContextUnitOfWork : IUnitOfWork
 	{
+        ISchemaHandler GetSchemaHandler();
+
+        IQueryable<DataAccessIncome> DataAccessIncomes { get; }
+
+        IQueryable<DataAccessDealer> DataAccessDealers { get; }
+
+        IQueryable<DataAccessCountry> DataAccessCountries { get; }
 	}
 }
 #pragma warning restore 1591

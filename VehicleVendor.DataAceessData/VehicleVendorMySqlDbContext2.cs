@@ -19,6 +19,11 @@
             }
         }
 
+        public ISchemaHandler GetSchemaHandler()
+        {
+            return this.GetSchemaHandler();
+        }
+
         public IQueryable<DataAccessIncome> DataAccessIncomes
         {
             get
@@ -41,11 +46,6 @@
             {
                 return this.GetAll<DataAccessCountry>();
             }
-        }
-
-        public void SaveChanges()
-        {
-            this.SaveChanges();
         }
     }
 }

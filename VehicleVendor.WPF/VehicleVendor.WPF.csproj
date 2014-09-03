@@ -25,6 +25,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -104,6 +105,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\VehicleVendor.DataAceessData\VehicleVendor.DataAceessData.csproj">
+      <Project>{6F9C2621-695C-4BDE-881B-157DCAA75C07}</Project>
+      <Name>VehicleVendor.DataAceessData</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VehicleVendor.Data\VehicleVendor.Data.csproj">
       <Project>{65dc843d-93d5-4750-a20d-029116e0de1c}</Project>
       <Name>VehicleVendor.Data</Name>
