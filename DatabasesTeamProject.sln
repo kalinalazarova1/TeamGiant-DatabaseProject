@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VehicleVendor.Models", "VehicleVendor.Models\VehicleVendor.Models.csproj", "{381C96B1-6FCE-4D6F-A6A8-30D33BD6EEF4}"
 EndProject
@@ -26,6 +26,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VehicleVendor.Reports", "Ve
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VehicleVendor.WPF", "VehicleVendor.WPF\VehicleVendor.WPF.csproj", "{830CFEAD-D8C0-40E9-94CF-8DD9F3E6DDEA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VehicleVendor.DataAceessData", "VehicleVendor.DataAceessData\VehicleVendor.DataAceessData.csproj", "{6F9C2621-695C-4BDE-881B-157DCAA75C07}"
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VehicleVendorSqLite.Model", "VehicleVendorSqLite.Model\VehicleVendorSqLite.Model.csproj", "{7826200E-08CE-4D11-80C9-1716FC116507}"
 EndProject
 Global
@@ -54,6 +55,10 @@ Global
 		{830CFEAD-D8C0-40E9-94CF-8DD9F3E6DDEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{830CFEAD-D8C0-40E9-94CF-8DD9F3E6DDEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{830CFEAD-D8C0-40E9-94CF-8DD9F3E6DDEA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F9C2621-695C-4BDE-881B-157DCAA75C07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F9C2621-695C-4BDE-881B-157DCAA75C07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F9C2621-695C-4BDE-881B-157DCAA75C07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F9C2621-695C-4BDE-881B-157DCAA75C07}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7826200E-08CE-4D11-80C9-1716FC116507}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7826200E-08CE-4D11-80C9-1716FC116507}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7826200E-08CE-4D11-80C9-1716FC116507}.Release|Any CPU.ActiveCfg = Release|Any CPU

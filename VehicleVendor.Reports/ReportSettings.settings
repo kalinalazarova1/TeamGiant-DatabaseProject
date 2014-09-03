@@ -9,7 +9,7 @@
       <Value Profile="(Default)">Data Source=..\..\..\SQLiteDatabase\nissan_costs.sqlite;Version=3;</Value>
     </Setting>
     <Setting Name="PDFFileName" Type="System.String" Scope="User">
-      <Value Profile="(Default)">../../PdfReport.pdf</Value>
+      <Value Profile="(Default)">../../Reports/PdfReport.pdf</Value>
     </Setting>
   </Settings>
 </SettingsFile>

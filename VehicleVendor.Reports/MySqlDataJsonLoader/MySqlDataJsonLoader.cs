@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using VehicleVendor.Data;
 using VehicleVendor.Data.Repositories;
+using VehicleVendor.DataAceessData;
+using VehicleVendor.DataAceessData.Repository;
 using VehicleVendor.Reports.JsonReportSQLServerGenerator;
 using VehicleVendor.Models;
 
@@ -29,13 +31,13 @@ namespace VehicleVendor.Reports.MySqlDataJsonGenerator
 
             foreach (var model in jsonCountryReports)
             {
-                var country = new Country()
+                var country = new DataAccessCountry()
                 {
                     Name = model.Country,
-                    Region = model.Region
+                    Region = (int) model.Region
                 };
 
-                this.mySqlRepository.Add<Country>(country);
+                this.mySqlRepository.Add<DataAccessCountry>(country);
             }
 
             this.mySqlRepository.SaveChanges();
@@ -44,14 +46,14 @@ namespace VehicleVendor.Reports.MySqlDataJsonGenerator
 
             foreach (var model in jsonDealerReports)
             {
-                var dealer = new Dealer()
+                var dealer = new DataAccessDealer()
                 {
                     Company = model.Company,
                     CountryId = model.CountryId,
                     Address = model.Address
                 };
 
-                this.mySqlRepository.Add<Dealer>(dealer);
+                this.mySqlRepository.Add<DataAccessDealer>(dealer);
             }
 
             this.mySqlRepository.SaveChanges();
@@ -60,14 +62,14 @@ namespace VehicleVendor.Reports.MySqlDataJsonGenerator
 
             foreach (var model in jsonIncomeReports)
             {
-                var income = new Income()
+                var income = new DataAccessIncome()
                 {
                     DealerId = model.DealerId,
                     Date = model.Date,
                     Amount = model.Amount
                 };
 
-                this.mySqlRepository.Add<Income>(income);
+                this.mySqlRepository.Add<DataAccessIncome>(income);
             }
 
             this.mySqlRepository.SaveChanges();

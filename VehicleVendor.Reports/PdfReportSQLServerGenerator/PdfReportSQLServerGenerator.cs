@@ -63,9 +63,16 @@
                 cells.HeaderRow(4, "Date: " + rows.First().SaleDate.ToShortDateString());
                 cells.HeaderRow(0, "Model", "Category", "Price", "Quantity");
 
-                foreach (var row in rows)
+                var groups = rows.GroupBy(x => x.Vehicle);
+
+                foreach (var row in groups)
                 {
-                    cells.DataCellRow(row.Vehicle, row.Category.ToString(), row.Price.ToString(), row.Quantity.ToString());
+                    string vehicleModel = row.First().Vehicle;
+                    string category = row.First().Category.ToString();
+                    string price = row.Sum(x => x.Price).ToString();
+                    string quantity = row.Sum(x => x.Quantity).ToString();
+
+                    cells.DataCellRow(vehicleModel, category, price, quantity);
                 }
 
                 var groupSum = rows.Sum(x => x.Price);

@@ -1,16 +1,17 @@
 ﻿namespace VehicleVendorConsole.Client
 {
     using System;
-    using System.Linq;
+
+    using PdfReportCreator;
+
     using VehicleVendor.Data;
     using VehicleVendor.Data.Repositories;
-    using VehicleVendor.Models;
+    using VehicleVendor.DataAceessData.Repository;
     using VehicleVendor.Reports;
-    using PdfReportCreator;
-    using VehicleVendorConsole.Client.XmlInput;
-    using VehicleVendor.Reports.XmlReportSqlServerGenerator;
     using VehicleVendor.Reports.JsonReportSQLServerGenerator;
     using VehicleVendor.Reports.MySqlDataJsonGenerator;
+    using VehicleVendor.Reports.XmlReportSqlServerGenerator;
+    using VehicleVendorConsole.Client.XmlInput;
     using VehicleVendorSqLite.Model;
 
     public class VehicleVendorConsoleClientEntryPoint
@@ -22,7 +23,7 @@
                 { 
                     new VehicleVendorDbContext()
                 });
-            var repoMySql = new VehicleVendorMySqlRepository(new VehicleVendorMySqlDbContext());
+            IVehicleVendorMySqlRepository repoMySql = new VehicleVendorMySqlRepository();
             var nissanMongoDb = new VehicleVendorMongoDb();
             var sqliteDb = new SqLiteContext();
 

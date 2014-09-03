@@ -67,13 +67,7 @@
     <Compile Include="IVehicleVendorData.cs" />
     <Compile Include="IVehicleVendorDbContext.cs" />
     <Compile Include="IVehicleVendorMongoDb.cs" />
-    <Compile Include="IVehicleVendorMySqlDbContext.cs" />
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Migrations\ConfigurationMySqlSingle.cs" />
-    <Compile Include="Migrations\ConfigurationMySql.cs" />
-    <Compile Include="Migrations\MySqlHistoryContext.cs" />
-    <Compile Include="Repositories\IVehicleVendorMySqlRepository.cs" />
-    <Compile Include="Repositories\VehicleVendorMySqlRepository.cs" />
     <Compile Include="VehicleVendorMongoDb.cs" />
     <Compile Include="Repositories\GenericRepository.cs" />
     <Compile Include="Repositories\IGenericRepository.cs" />
@@ -81,8 +75,6 @@
     <Compile Include="Repositories\VehicleVendorRepository.cs" />
     <Compile Include="VehicleVendorDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="VehicleVendorDbContextInMySql.cs" />
-    <Compile Include="VehicleVendorMySqlDbContext.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
