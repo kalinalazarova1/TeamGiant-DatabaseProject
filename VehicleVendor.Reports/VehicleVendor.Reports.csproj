@@ -106,6 +106,10 @@
       <Project>{381c96b1-6fce-4d6f-a6a8-30d33bd6eef4}</Project>
       <Name>VehicleVendor.Models</Name>
     </ProjectReference>
+    <ProjectReference Include="..\VehicleVendorSqLite.Model\VehicleVendorSqLite.Model.csproj">
+      <Project>{7826200e-08ce-4d11-80c9-1716fc116507}</Project>
+      <Name>VehicleVendorSqLite.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="x64\SQLite.Interop.dll">

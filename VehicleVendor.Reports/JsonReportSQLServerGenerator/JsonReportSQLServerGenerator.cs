@@ -90,12 +90,13 @@
                 .Join(this.repository.SalesDetails, h => h.Id, d => d.SaleId, (h, d) => new { h = h, d = d })
                 .Join(this.repository.Dealers, s => s.h.DealerId, d => d.Id, (s, d) => new { s = s, d = d })
                 .Join(this.repository.Countries, a => a.d.CountryId, c => c.Id, (a, c) => new { a = a, c = c })
-                .Join(this.repository.Vehicles, i => i.a.s.d.VehicleId, p => p.Id, (i, p) => new { i = i, p = p})
-                .Select(f => new JsonIncomeReportModel() 
+                .Join(this.repository.Vehicles, i => i.a.s.d.VehicleId, p => p.Id, (i, p) => new { i = i, p = p })
+                .Join(this.repository.Discounts, f => f.i.a.d.Id, fd => fd.DealerId, (f, fd) => new {f = f, fd = fd })
+                .Select(f => new JsonIncomeReportModel()
                 {
-                    Date = f.i.a.s.h.SaleDate,
-                    DealerId = f.i.a.d.Id,
-                    Amount = f.i.a.s.d.Quantity * f.p.Price
+                    Date = f.f.i.a.s.h.SaleDate,
+                    DealerId = f.f.i.a.d.Id,
+                    Amount = f.f.i.a.s.d.Quantity * f.f.p.Price
                 })
                 .ToList();
 

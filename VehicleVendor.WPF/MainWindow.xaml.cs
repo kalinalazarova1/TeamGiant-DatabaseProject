@@ -23,6 +23,8 @@
     using VehicleVendorConsole.Client.XmlInput;
     using VehicleVendor.Reports.JsonReportSQLServerGenerator;
     using VehicleVendor.Reports.MySqlDataJsonGenerator;
+    using VehicleVendor.Reports.XmlReportSqlServerGenerator;
+    using VehicleVendorSqLite.Model;
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -32,6 +34,7 @@
         private IVehicleVendorRepository repo;
         private IVehicleVendorMySqlRepository repoMySql;
         private IVehicleVendorMongoDb nissanMongoDb;
+        private SqLiteContext sqliteDb;
 
         public MainWindow()
         {
@@ -39,12 +42,13 @@
             this.repo = new VehicleVendorRepository(new IVehicleVendorDbContext[] { new VehicleVendorDbContext() });
             this.repoMySql = new VehicleVendorMySqlRepository(new VehicleVendorMySqlDbContext());
             this.nissanMongoDb = new VehicleVendorMongoDb();
+            this.sqliteDb = new SqLiteContext();
         }
 
         public void OnLoadMongoClick(object sender, RoutedEventArgs e)
         {
-            try 
-            { 
+            try
+            {
                 var mongoLoader = new MongoLoader(this.repo, this.nissanMongoDb);
                 mongoLoader.LoadRepository();
                 repo.SaveChanges();
@@ -76,7 +80,7 @@
         public void OnXMLToMongoClick(object sender, RoutedEventArgs e)
         {
             try
-            { 
+            {
                 var xmlParser = new XmlParser(repo);
                 var parseResult = xmlParser.ParseDiscounts(@"..\..\..\Discounts.xml", @"..\..\..\Discounts.xsd");
                 var mongoLoader = new MongoLoader(this.repo, this.nissanMongoDb);
@@ -108,7 +112,7 @@
         {
             try
             {
-                var excelReporter = new ExcelReportsSQLiteGenerator(repoMySql, new DateTime(2014, 8, 1), new DateTime(2014, 9, 1));
+                var excelReporter = new ExcelReportsSQLiteGenerator(repoMySql, sqliteDb, new DateTime(2014, 8, 1), new DateTime(2014, 9, 1));
                 excelReporter.GenerateReport();
                 Print("Excel 2007 report from SQLite and MySql is completed.");
             }
@@ -151,7 +155,16 @@
 
         public void OnGenerateXMLReportClick(object sender, RoutedEventArgs e)
         {
-            
+            try
+            {
+                var xmlReporter = new XmlReportGenerator(repo, new DateTime(2014, 01, 01), DateTime.Now);
+                xmlReporter.GenerateReport();
+                Print("XML Report from SQL is successfully genrated.");
+            }
+            catch (Exception ex)
+            {
+                Print(ex.Message);
+            }
         }
 
         public void Print(string message)
