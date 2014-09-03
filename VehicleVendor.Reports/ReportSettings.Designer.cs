@@ -50,7 +50,7 @@ namespace VehicleVendor.Reports {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("../../PdfReport.pdf")]
+        [global::System.Configuration.DefaultSettingValueAttribute("../../Reports/PdfReport.pdf")]
         public string PDFFileName {
             get {
                 return ((string)(this["PDFFileName"]));
