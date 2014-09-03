@@ -5,8 +5,8 @@
 
     public class HeaderCell : PdfCell
     {
-        public HeaderCell(PdfPTable table, string data)
-            : base(table, data, Color.LIGHT_GRAY, 0)
+        public HeaderCell(PdfPTable table, string data, int columnSpan = 0)
+            : base(table, data, Color.LIGHT_GRAY, columnSpan)
         {
         }
     }

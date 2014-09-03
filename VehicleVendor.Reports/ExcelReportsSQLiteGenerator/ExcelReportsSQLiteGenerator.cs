@@ -8,16 +8,19 @@
     using OfficeOpenXml;
     using OfficeOpenXml.Style;
     using VehicleVendor.Data.Repositories;
+    using VehicleVendorSqLite.Model;
 
     public class ExcelReportsSQLiteGenerator : IReportGenerator
     {
         private IVehicleVendorMySqlRepository repoMySql;
         private DateTime start;
         private DateTime end;
+        private SqLiteContext sqliteDb;
 
-        public ExcelReportsSQLiteGenerator(IVehicleVendorMySqlRepository repoMySql, DateTime start, DateTime end)
+        public ExcelReportsSQLiteGenerator(IVehicleVendorMySqlRepository repoMySql, SqLiteContext sqliteDb,  DateTime start, DateTime end)
         {
             this.repoMySql = repoMySql;
+            this.sqliteDb = sqliteDb;
             this.start = start;
             this.end = end;
         }
@@ -53,59 +56,50 @@
                     range.Style.ShrinkToFit = false;
                 }
 
-                var conSQLite = new SQLiteConnection(ReportSettings.Default.SQLiteConnectionString);
-                conSQLite.Open();
-                using(conSQLite)
+                int rowNumber = 3;
+
+                var dealerCosts = sqliteDb.DealersCosts.Select(c => new { Dealer = c.Dealer, ConstCosts = c.ConstCosts, SaleCosts = c.SaleCosts}).ToList();
+                foreach (var item in dealerCosts)
                 {
-                    var sqliteCmd = new SQLiteCommand("SELECT * FROM dealersCosts", conSQLite);
-                    var costsReader = sqliteCmd.ExecuteReader();
-                    int rowNumber = 3;
-
-                    using(costsReader)
-                    {
-                        while(costsReader.Read())
-                        {
-                            string dealer = (string)costsReader["Dealer"];
-                            decimal sales = 0m;
-                            var records = this.repoMySql.Incomes.Where(i => i.Dealer.Company == dealer);
+                    string dealer = item.Dealer;
+                    decimal sales = 0m;
+                    var records = this.repoMySql.Incomes.Where(i => i.Dealer.Company == dealer);
                                 
-                            if (records.Count() > 0)
-                            {
-                                sales = records.Sum(r => r.Amount);
-                            }
-
-                            decimal costs = ((decimal)costsReader["ConstCosts"]) / 30m * (decimal)(this.end - this.start).TotalDays + (decimal)costsReader["SaleCosts"] * sales;
-                            decimal profit = (decimal)(sales - costs);
-                            
-                            worksheet.Cells[rowNumber, 1].Value = dealer;
-                            worksheet.Cells[rowNumber, 2].Value = sales;
-                            worksheet.Cells[rowNumber, 3].Value = costs;
-                            worksheet.Cells[rowNumber, 4].Value = profit;
-                            worksheet.Cells[rowNumber, 2, rowNumber, 4].Style.Numberformat.Format = "### ### ### ###";
-
-                            using (var rowRange = worksheet.Cells[rowNumber, 1, rowNumber, 4])
-                            {
-                                rowRange.Style.Font.Bold = false;
-                                rowRange.Style.Fill.PatternType = ExcelFillStyle.Solid;
-                                rowRange.Style.Fill.BackgroundColor.SetColor(Color.LightSteelBlue);
-                                rowRange.Style.Font.Color.SetColor(Color.Black);
-                                rowRange.Style.ShrinkToFit = false;
-                                rowRange.Style.Border.Left.Style = ExcelBorderStyle.Thin;
-                                rowRange.Style.Border.Top.Style = ExcelBorderStyle.Thin;
-                                rowRange.Style.Border.Right.Style = ExcelBorderStyle.Thin;
-                                rowRange.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
-                            }
-
-                            rowNumber++;
-                        }
+                    if (records.Count() > 0)
+                    {
+                        sales = records.Sum(r => r.Amount);
                     }
 
-                    worksheet.Column(1).Width = 50;
-                    worksheet.Column(2).AutoFit();
-                    worksheet.Column(3).AutoFit();
-                    worksheet.Column(4).AutoFit();
-                    package.Save();
+                    decimal costs = item.ConstCosts / 30m * (decimal)(this.end - this.start).TotalDays + item.SaleCosts * sales;
+                    decimal profit = sales - costs;
+                            
+                    worksheet.Cells[rowNumber, 1].Value = dealer;
+                    worksheet.Cells[rowNumber, 2].Value = sales;
+                    worksheet.Cells[rowNumber, 3].Value = costs;
+                    worksheet.Cells[rowNumber, 4].Value = profit;
+                    worksheet.Cells[rowNumber, 2, rowNumber, 4].Style.Numberformat.Format = "### ### ### ###";
+
+                    using (var rowRange = worksheet.Cells[rowNumber, 1, rowNumber, 4])
+                    {
+                        rowRange.Style.Font.Bold = false;
+                        rowRange.Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        rowRange.Style.Fill.BackgroundColor.SetColor(Color.LightSteelBlue);
+                        rowRange.Style.Font.Color.SetColor(Color.Black);
+                        rowRange.Style.ShrinkToFit = false;
+                        rowRange.Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        rowRange.Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        rowRange.Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        rowRange.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                    }
+
+                    rowNumber++;
                 }
+                  
+                worksheet.Column(1).Width = 50;
+                worksheet.Column(2).AutoFit();
+                worksheet.Column(3).AutoFit();
+                worksheet.Column(4).AutoFit();
+                package.Save();
             }
         }
     }

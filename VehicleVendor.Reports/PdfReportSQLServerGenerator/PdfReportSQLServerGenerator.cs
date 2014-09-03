@@ -1,10 +1,15 @@
 ﻿namespace PdfReportCreator
 {
+    using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.IO;
     using System.Linq;
+    using System.Threading;
+
     using iTextSharp.text;
     using iTextSharp.text.pdf;
+
     using VehicleVendor.Data.Repositories;
     using VehicleVendor.Reports;
 
@@ -17,17 +22,18 @@
             this.repository = vehicleVendorRepository;
         }
 
-        // Data cant be from the "GeneratePDF" or can be passed out
-        private List<IGrouping<string, CarsPdfRow>> GetData()
+        private List<IGrouping<DateTime, PdfReportModel>> GetData()
         {
-            var collection = this.repository.Vehicles
-                .Select(x => new CarsPdfRow
+            var collection = this.repository.SalesDetails
+                .Select(t => new PdfReportModel
                 {
-                    Model = x.Name,
-                    Category = x.Category.ToString(),
-                    Price = x.Price.ToString()
+                    Vehicle = t.Vehicle.Name,
+                    Category = t.Vehicle.Category,
+                    Price = t.Vehicle.Price,
+                    Quantity = t.Quantity,
+                    SaleDate = t.Sale.SaleDate
                 })
-                .GroupBy(x => x.Category)
+                .GroupBy(x => x.SaleDate)
                 .ToList();
 
             return collection;
@@ -36,7 +42,7 @@
         public void GenerateReport()
         {
             // In case of DateTime usage
-            //Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
+            Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             var collection = GetData();
             decimal totalSum = 0;
             Document document = new Document();
@@ -45,23 +51,24 @@
             document.Open();
 
             // It is important to set the columns count, so the appearance is ok
-            int tableColumns = 3;
+            int tableColumns = 4;
 
             PdfPTable table = new PdfPTable(tableColumns);
             CellsFactory cells = new CellsFactory(table, tableColumns);
 
-            cells.TitleCell("Nissan Cars Report by Category");
+            cells.TitleCell("Cars Report by Date!");
 
             foreach (var rows in collection)
             {
-                cells.HeaderRow("Model", "Category", "Price");
+                cells.HeaderRow(4, "Date: " + rows.First().SaleDate.ToShortDateString());
+                cells.HeaderRow(0, "Model", "Category", "Price", "Quantity");
 
                 foreach (var row in rows)
                 {
-                    cells.DataCellRow(row.Model, row.Category, row.Price.ToString());
+                    cells.DataCellRow(row.Vehicle, row.Category.ToString(), row.Price.ToString(), row.Quantity.ToString());
                 }
 
-                var groupSum = rows.Sum(x => decimal.Parse(x.Price));
+                var groupSum = rows.Sum(x => x.Price);
                 totalSum += groupSum;
                 cells.SummaryCell(string.Format("Group Price: {0}", groupSum.ToString()));
             }

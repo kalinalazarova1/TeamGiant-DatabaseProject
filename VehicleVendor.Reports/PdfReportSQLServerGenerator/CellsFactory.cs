@@ -21,12 +21,12 @@
 
         public void SummaryCell(string data)
         {
-            var summaryCell = new SummaryCell(this.table, data);
+            var summaryCell = new SummaryCell(this.table, data, this.table.NumberOfColumns);
         }
 
-        public void HeaderCell(string data)
+        public void HeaderCell(string data, int colSpan = 0)
         {
-            var summaryCell = new HeaderCell(this.table, data);
+            var headerCell = new HeaderCell(this.table, data, colSpan);
         }
 
         public void TitleCell(string data)
@@ -34,11 +34,11 @@
             var summaryCell = new TitleCell(this.table, data, this.columnsCount);
         }
 
-        public void HeaderRow(params string[] columnNames)
+        public void HeaderRow(int colSpan = 0, params string[] columnNames)
         {
             foreach (var name in columnNames)
             {
-                this.HeaderCell(name);
+                this.HeaderCell(name, colSpan);
             }
         }
 
