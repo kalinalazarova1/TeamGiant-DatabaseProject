@@ -14,19 +14,17 @@
     using System.Windows.Media.Imaging;
     using System.Windows.Navigation;
     using System.Windows.Shapes;
+    using PdfReportCreator;
     using VehicleVendor.Data;
     using VehicleVendor.Data.Repositories;
-    using VehicleVendor.DataAceessData;
     using VehicleVendor.DataAceessData.Repository;
-    using VehicleVendor.Models;
     using VehicleVendor.Reports;
-    using PdfReportCreator;
-    using VehicleVendorConsole.Client;
-    using VehicleVendorConsole.Client.XmlInput;
     using VehicleVendor.Reports.JsonReportSQLServerGenerator;
     using VehicleVendor.Reports.MySqlDataJsonGenerator;
     using VehicleVendor.Reports.XmlReportSqlServerGenerator;
+    using VehicleVendorConsole.Client.XmlInput;
     using VehicleVendorSqLite.Model;
+    using VehicleVendorConsole.Client;
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
