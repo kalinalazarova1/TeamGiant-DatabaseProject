@@ -13,21 +13,18 @@
     using VehicleVendor.Reports.XmlReportSqlServerGenerator;
     using VehicleVendorConsole.Client.XmlInput;
     using VehicleVendorSqLite.Model;
+    using VehicleVendorSqLite.Model.Repository;
 
     public class VehicleVendorConsoleClientEntryPoint
     {
         public static void Main()
         {
-            var repo = new VehicleVendorRepository(
-                new IVehicleVendorDbContext[]
-                { 
-                    new VehicleVendorDbContext()
-                });
-            IVehicleVendorMySqlRepository repoMySql = new VehicleVendorMySqlRepository();
-            var nissanMongoDb = new VehicleVendorMongoDb();
-            var sqliteDb = new SqLiteContext();
-
-            var mongoLoader = new MongoLoader(repo, nissanMongoDb);
+            var repo = new VehicleVendorRepository( new IVehicleVendorDbContext[] { new VehicleVendorDbContext() });
+            var repoMySql = new VehicleVendorMySqlRepository();          
+            var repoSqLite = new VehicleVendorSqLiteRepository(new SqLiteContext());
+            var repoMongo = new VehicleVendorMongoRepository(new VehicleVendorMongoDb());
+            var mongoLoader = new MongoLoader(repo, repoMongo);
+            
             mongoLoader.LoadRepository();
             repo.SaveChanges();
 
@@ -53,7 +50,7 @@
             var jsonToMySql = new MySqlDataJsonLoader(repo, repoMySql);
             jsonToMySql.WriteJsonsReportsToMySql();
 
-            var excelReporter = new ExcelReportsSQLiteGenerator(repoMySql, sqliteDb, new DateTime(2014, 8, 1), new DateTime(2014, 9, 1));
+            var excelReporter = new ExcelReportsSQLiteGenerator(repoMySql, repoSqLite, new DateTime(2014, 8, 1), new DateTime(2014, 9, 1));
             excelReporter.GenerateReport();
         }
     }

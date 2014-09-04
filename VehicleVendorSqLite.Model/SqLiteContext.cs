@@ -9,7 +9,7 @@
         {
         }
 
-        public DbSet<DealersCosts> DealersCosts { get; set; }
+        public DbSet<DealersCosts> DealersCostsSet { get; set; }
 
         public new IDbSet<T> Set<T>() where T : class
         {

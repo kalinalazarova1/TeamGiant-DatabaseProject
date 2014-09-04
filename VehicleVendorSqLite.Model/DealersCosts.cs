@@ -1,6 +1,6 @@
 ﻿namespace VehicleVendorSqLite.Model
 {
-    public class DealerCosts
+    public class DealersCosts
     {
         public int Id { get; set; }
 

@@ -13,18 +13,19 @@
     using VehicleVendor.Data.Repositories;
     using VehicleVendor.DataAceessData.Repository;
     using VehicleVendorSqLite.Model;
+    using VehicleVendorSqLite.Model.Repository;
 
     public class ExcelReportsSQLiteGenerator : IReportGenerator
     {
         private IVehicleVendorMySqlRepository repoMySql;
         private DateTime start;
         private DateTime end;
-        private SqLiteContext sqliteDb;
+        private IVehicleVendorSqLiteRepository repoSqLite;
 
-        public ExcelReportsSQLiteGenerator(IVehicleVendorMySqlRepository repoMySql, SqLiteContext sqliteDb,  DateTime start, DateTime end)
+        public ExcelReportsSQLiteGenerator(IVehicleVendorMySqlRepository repoMySql, IVehicleVendorSqLiteRepository repoSqLite, DateTime start, DateTime end)
         {
             this.repoMySql = repoMySql;
-            this.sqliteDb = sqliteDb;
+            this.repoSqLite = repoSqLite;
             this.start = start;
             this.end = end;
         }
@@ -62,12 +63,12 @@
 
                 int rowNumber = 3;
 
-                var dealerCosts = sqliteDb.DealersCosts.Select(c => new { Dealer = c.Dealer, ConstCosts = c.ConstCosts, SaleCosts = c.SaleCosts}).ToList();
+                var dealerCosts = repoSqLite.DealersCostsSet.Select(c => new { Dealer = c.Dealer, ConstCosts = c.ConstCosts, SaleCosts = c.SaleCosts}).ToList();
                 foreach (var item in dealerCosts)
                 {
                     string dealer = item.Dealer;
                     decimal sales = 0m;
-                    var records = this.repoMySql.DataAccessIncomes.Where(i => i.DataAccessDealer.Company == dealer); //.Where(i => i.DataAccessDealer.Company == dealer);
+                    var records = this.repoMySql.DataAccessIncomes.Where(i => i.DataAccessDealer.Company == dealer); 
                                 
                     if (records.Count() > 0)
                     {

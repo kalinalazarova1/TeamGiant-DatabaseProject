@@ -10,12 +10,12 @@
     public class MongoLoader : IRepositoryLoader
     {
         private IVehicleVendorRepository repo;
-        private IVehicleVendorMongoDb nissanMongoDb;
+        private IVehicleVendorMongoRepository repoMongo;
 
-        public MongoLoader(IVehicleVendorRepository repo, IVehicleVendorMongoDb nissanMongoDb)
+        public MongoLoader(IVehicleVendorRepository repo, IVehicleVendorMongoRepository repoMongo)
         {
             this.repo = repo;
-            this.nissanMongoDb = nissanMongoDb;
+            this.repoMongo = repoMongo;
         }
 
         public void LoadDiscountsInMongo(IDictionary<int, double> discountParameters)
@@ -25,7 +25,7 @@
                 var company = this.repo.Dealers.First(d => d.Id == discount.Key).Company;
                 var query = Query<Dealer>.EQ(d => d.Company, company);
                 var update = Update<Dealer>.Set(d => d.Discount, discount.Value);
-                this.nissanMongoDb.Database.GetCollection<Dealer>("Dealers").Update(query, update);
+                this.repoMongo.Database.GetCollection<Dealer>("Dealers").Update(query, update);
             }
         }
 
@@ -40,7 +40,7 @@
         {
             if (this.repo.Vehicles.Count() == 0)
             {
-                var vehicles = this.nissanMongoDb.GetDocument("Vehicles");
+                var vehicles = this.repoMongo.GetDocument("Vehicles");
                 foreach (var item in vehicles)
                 {
                     this.repo.Add<Vehicle>(
@@ -58,7 +58,7 @@
         {
             if (this.repo.Countries.Count() == 0)
             {
-                var coutries = this.nissanMongoDb.GetDocument("Countries");
+                var coutries = this.repoMongo.GetDocument("Countries");
                 foreach (var item in coutries)
                 {
                     this.repo.Add<Country>(
@@ -75,7 +75,7 @@
         {
             if (this.repo.Dealers.Count() == 0)
             {
-                var dealers = this.nissanMongoDb.GetDocument("Dealers");
+                var dealers = this.repoMongo.GetDocument("Dealers");
                 foreach (var item in dealers)
                 {
                     var countryName = item["Country"].ToString();

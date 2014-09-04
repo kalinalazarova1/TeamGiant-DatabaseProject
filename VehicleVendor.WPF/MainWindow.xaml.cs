@@ -25,6 +25,7 @@
     using VehicleVendorConsole.Client.XmlInput;
     using VehicleVendorSqLite.Model;
     using VehicleVendorConsole.Client;
+    using VehicleVendorSqLite.Model.Repository;
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -33,23 +34,23 @@
     {
         private IVehicleVendorRepository repo;
         private IVehicleVendorMySqlRepository repoMySql;
-        private IVehicleVendorMongoDb nissanMongoDb;
-        private SqLiteContext sqliteDb;
+        private IVehicleVendorMongoRepository repoMongo;
+        private IVehicleVendorSqLiteRepository repoSqLite;
 
         public MainWindow()
         {
             InitializeComponent();
             this.repo = new VehicleVendorRepository(new IVehicleVendorDbContext[] { new VehicleVendorDbContext() });
             this.repoMySql = new VehicleVendorMySqlRepository();
-            this.nissanMongoDb = new VehicleVendorMongoDb();
-            this.sqliteDb = new SqLiteContext();
+            this.repoMongo = new VehicleVendorMongoRepository(new VehicleVendorMongoDb());
+            this.repoSqLite = new VehicleVendorSqLiteRepository(new SqLiteContext());
         }
 
         public void OnLoadMongoClick(object sender, RoutedEventArgs e)
         {
             try
             {
-                var mongoLoader = new MongoLoader(this.repo, this.nissanMongoDb);
+                var mongoLoader = new MongoLoader(this.repo, this.repoMongo);
                 mongoLoader.LoadRepository();
                 repo.SaveChanges();
                 Print("Countries, dealers and vehicle data from MongoDB successfully loaded.");
@@ -83,7 +84,7 @@
             {
                 var xmlParser = new XmlParser(repo);
                 var parseResult = xmlParser.ParseDiscounts(@"..\..\..\Discounts.xml", @"..\..\..\Discounts.xsd");
-                var mongoLoader = new MongoLoader(this.repo, this.nissanMongoDb);
+                var mongoLoader = new MongoLoader(this.repo, this.repoMongo);
                 mongoLoader.LoadDiscountsInMongo(parseResult);
                 Print("Discounts data from XML to MongoDB successfuly loaded.");
             }
@@ -112,7 +113,7 @@
         {
             try
             {
-                var excelReporter = new ExcelReportsSQLiteGenerator(repoMySql, sqliteDb, new DateTime(2014, 8, 1), new DateTime(2014, 9, 1));
+                var excelReporter = new ExcelReportsSQLiteGenerator(repoMySql, repoSqLite, new DateTime(2014, 8, 1), new DateTime(2014, 9, 1));
                 excelReporter.GenerateReport();
                 Print("Excel 2007 report from SQLite and MySql is completed.");
             }

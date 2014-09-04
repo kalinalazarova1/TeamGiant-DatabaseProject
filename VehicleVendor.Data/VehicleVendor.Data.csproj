@@ -68,6 +68,8 @@
     <Compile Include="IVehicleVendorDbContext.cs" />
     <Compile Include="IVehicleVendorMongoDb.cs" />
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Repositories\IVehicleVendorMongoRepository.cs" />
+    <Compile Include="Repositories\VehicleVendorMongoRepository.cs" />
     <Compile Include="VehicleVendorMongoDb.cs" />
     <Compile Include="Repositories\GenericRepository.cs" />
     <Compile Include="Repositories\IGenericRepository.cs" />
